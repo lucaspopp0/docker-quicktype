@@ -1,17 +1,27 @@
 #!/bin/bash -e
 
-echo "Current node version: $(node -v)"
+CURRENT_NODE_VERSION="$(node -v)"
+
+echo "Current node version: $CURRENT_NODE_VERSION"
 
 # Parse the Dockerfile to get the Node.js version
-NODE_VERSION=$(cat docker-quicktype/Dockerfile \
+DOCKER_NODE_VERSION=v$(cat docker-quicktype/Dockerfile \
     | grep 'FROM node:' \
     | head -n 1 \
     | sed -E 's/FROM node:([^ ]+).*/\1/')
 
-echo "Dockerfile node version: $NODE_VERSION"
+echo "Docker node version: $DOCKER_NODE_VERSION"
 
-echo "Updating .nvmrc to v$NODE_VERSION"
-echo "v$NODE_VERSION" > .nvmrc
+if [[ "$CURRENT_NODE_VERSION" == "$DOCKER_NODE_VERSION" ]]; then
+    echo "Node version is already up to date."
+    exit 0
+fi
+
+echo "Updating .nvmrc to $NODE_VERSION"
+echo "$NODE_VERSION" > .nvmrc
 
 nvm install .
 nvm use .
+
+cd docker-quicktype
+npm i

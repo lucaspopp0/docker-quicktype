@@ -24,19 +24,17 @@ jobs:
     uses: ./.github/workflows/detect-changes.yml
     secrets: inherit
 
-  check-build:
+  check-source:
     needs: detect-changes
     if: needs.detect-changes.outputs.source-changed == 'true'
-    uses: ./.github/workflows/docker-build.yml
-    with:
-      PUSH: false
+    uses: ./.github/workflows/check-source.yml
     secrets: inherit
 
   pr-ready:
     if: always()
     needs:
       - detect-changes
-      - check-build
+      - check-source
     runs-on: ubuntu-latest
     steps:
       -
