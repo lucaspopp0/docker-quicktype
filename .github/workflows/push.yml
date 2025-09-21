@@ -125,4 +125,5 @@ jobs:
     uses: ./.github/workflows/docker-build.yml
     with:
       PUSH: true
+      CHECKOUT_REF: refs/tags/${{ needs.tag-and-release.outputs.version-tag }}
     secrets: inherit
