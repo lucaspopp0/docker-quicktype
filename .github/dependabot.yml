@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://json.schemastore.org/dependabot-2.0.json
+version: 2
+updates:
+  -
+    package-ecosystem: docker
+    directory: "/docker-quicktype"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+  -
+    package-ecosystem: npm
+    directory: "/docker-quicktype"
+    open-pull-requests-limit: 5
+    schedule:
+      interval: weekly
+    allow:
+      - dependency-type: direct
+  -
+    package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
