@@ -2,13 +2,10 @@ name: detect-changes
 
 on:
   workflow_call:
-    secrets:
-      NPM_PAT:
-        required: true
     outputs:
       source-changed:
         value: ${{ jobs.detect-changes.outputs.source-changed }}
-      ci-changes:
+      ci-changed:
         value: ${{ jobs.detect-changes.outputs.ci-changed }}
 
 permissions:
@@ -24,8 +21,8 @@ jobs:
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
-      source-changed: ${{ steps.changed-paths.outputs.source == 'true' }}
-      ci-changed: ${{ steps.changed-paths.outputs.ci == 'true' }}
+      source-changed: ${{ contains(fromJson(steps.changed-paths.outputs.changes || '[]'), 'source') }}
+      ci-changed: ${{ contains(fromJson(steps.changed-paths.outputs.changes || '[]'), 'ci') }}
     steps:
       -
         uses: actions/checkout@v5
