@@ -11,8 +11,7 @@ permissions:
   contents: write
   pull-requests: write
   id-token: write
-  packages: read
-  actions: read
+  packages: write
 
 defaults:
   run:
@@ -22,17 +21,26 @@ jobs:
 
   detect-changes:
     uses: ./.github/workflows/detect-changes.yml
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     secrets: inherit
 
   tag-and-release:
     needs: detect-changes
     if: |
       needs.detect-changes.outputs.source-changed == 'true' ||
+      needs.detect-changes.outputs.ci-changed == 'true' ||
       github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.generate-version.outputs.version }}
       version-tag: ${{ steps.generate-version.outputs.version_tag }}
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     steps:
       - 
         name: Generate bot token
@@ -120,11 +128,12 @@ jobs:
             --generate-notes
 
   build-and-push:
+    permissions: write-all
     needs: 
       - detect-changes
       - tag-and-release
-    if: needs.detect-changes.outputs.source-changed == 'true'
     uses: ./.github/workflows/docker-build.yml
     with:
       PUSH: true
+      CHECKOUT_REF: refs/tags/${{ needs.tag-and-release.outputs.version-tag }}
     secrets: inherit
