@@ -22,12 +22,6 @@ env:
 
 jobs:
 
-  docker-build:
-    uses: ./.github/workflows/docker-build.yml
-    with:
-      PUSH: false
-    secrets: inherit
-
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -106,3 +100,11 @@ jobs:
         name: Fail if changes
         if: ${{ steps.detect-changes.outputs.detected == 'true' }}
         run: exit 1
+
+  docker-build:
+    needs:
+      - lint
+    uses: ./.github/workflows/docker-build.yml
+    with:
+      PUSH: false
+    secrets: inherit
