@@ -80,9 +80,17 @@ jobs:
         name: Update project Node version
         if: steps.check-versions.outputs.needs-update == 'true'
         working-directory: docker-quicktype
+        env:
+          TARGET_VERSION: ${{ steps.check-versions.outputs.docker-node-version }}
         run: |
-          echo "${{ steps.check-versions.outputs.docker-node-version }}" > .nvmrc
+          echo "${TARGET_VERSION}" > .nvmrc
           npm i
+      -
+        name: Generate examples
+        if: steps.check-versions.outputs.needs-update == 'true'
+        working-directory: examples
+        run: |
+          make generate
       -
         name: Detect changes
         id: detect-changes
