@@ -27,8 +27,10 @@ jobs:
   check-source:
     needs: detect-changes
     if: needs.detect-changes.outputs.source-changed == 'true'
-    uses: ./.github/workflows/check-source.yml
+    uses: ./.github/workflows/docker-build.yml
     secrets: inherit
+    with:
+      PUSH: false
 
   pr-ready:
     if: always()
