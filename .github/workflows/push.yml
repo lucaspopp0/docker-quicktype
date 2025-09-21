@@ -121,7 +121,6 @@ jobs:
     needs: 
       - detect-changes
       - tag-and-release
-    if: needs.detect-changes.outputs.source-changed == 'true'
     uses: ./.github/workflows/docker-build.yml
     with:
       PUSH: true
