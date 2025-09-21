@@ -1,0 +1,40 @@
+{
+  "$id": "chinesecheckers.v1.Game.jsonschema.strict.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "board": {
+      "items": {
+        "$ref": "chinesecheckers.v1.GameRow.jsonschema.strict.json"
+      },
+      "type": "array"
+    },
+    "createdDate": {
+      "$ref": "google.protobuf.Timestamp.jsonschema.strict.json"
+    },
+    "currentPlayer": {
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "type": "integer"
+    },
+    "id": {
+      "type": "string"
+    },
+    "players": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "updatedDate": {
+      "$ref": "google.protobuf.Timestamp.jsonschema.strict.json"
+    }
+  },
+  "required": [
+    "id",
+    "currentPlayer",
+    "players"
+  ],
+  "title": "Game",
+  "type": "object"
+}
