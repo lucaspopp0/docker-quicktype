@@ -1,0 +1,12 @@
+{
+  "$id": "chinesecheckers.v1.GameSlot.jsonschema.strict.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "user": {
+      "type": "string"
+    }
+  },
+  "title": "Game Slot",
+  "type": "object"
+}

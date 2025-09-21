@@ -1,0 +1,18 @@
+{
+  "$id": "chinesecheckers.v1.GameRow.jsonschema.strict.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "slots": {
+      "items": {
+        "$ref": "chinesecheckers.v1.GameSlot.jsonschema.strict.json"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "slots"
+  ],
+  "title": "Game Row",
+  "type": "object"
+}

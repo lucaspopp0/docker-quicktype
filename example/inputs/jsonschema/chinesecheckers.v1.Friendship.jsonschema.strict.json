@@ -1,0 +1,40 @@
+{
+  "$id": "chinesecheckers.v1.Friendship.jsonschema.strict.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "acceptedDate": {
+      "$ref": "google.protobuf.Timestamp.jsonschema.strict.json"
+    },
+    "initiator": {
+      "type": "string"
+    },
+    "requestedDate": {
+      "$ref": "google.protobuf.Timestamp.jsonschema.strict.json"
+    },
+    "status": {
+      "enum": [
+        "FRIENDSHIP_STATUS_UNSPECIFIED",
+        "FRIENDSHIP_STATUS_REQUESTED",
+        "FRIENDSHIP_STATUS_ACCEPTED",
+        "FRIENDSHIP_STATUS_REJECTED"
+      ],
+      "title": "Friendship Status",
+      "type": "string"
+    },
+    "uid1": {
+      "type": "string"
+    },
+    "uid2": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "uid1",
+    "uid2",
+    "status",
+    "initiator"
+  ],
+  "title": "Friendship",
+  "type": "object"
+}

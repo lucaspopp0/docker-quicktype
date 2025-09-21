@@ -1,0 +1,29 @@
+{
+  "$id": "chinesecheckers.v1.User.jsonschema.strict.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "createdDate": {
+      "$ref": "google.protobuf.Timestamp.jsonschema.strict.json"
+    },
+    "email": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "updatedDate": {
+      "$ref": "google.protobuf.Timestamp.jsonschema.strict.json"
+    }
+  },
+  "required": [
+    "id",
+    "email",
+    "name"
+  ],
+  "title": "User",
+  "type": "object"
+}
