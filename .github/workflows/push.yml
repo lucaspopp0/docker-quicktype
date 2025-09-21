@@ -1,0 +1,130 @@
+name: push
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+  packages: read
+  actions: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+
+  detect-changes:
+    uses: ./.github/workflows/detect-changes.yml
+    secrets: inherit
+
+  tag-and-release:
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.source-changed == 'true' ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.generate-version.outputs.version }}
+      version-tag: ${{ steps.generate-version.outputs.version_tag }}
+    steps:
+      - 
+        name: Generate bot token
+        id: bot-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.BOT_APP_ID }}
+          private_key: ${{ secrets.BOT_PRIVATE_KEY }}
+      -
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          token: ${{ steps.bot-token.outputs.token }}
+      -
+        name: Determine version
+        id: generate-version
+        uses: paulhatch/semantic-version@v5.4.0
+        with:
+          major_pattern: "(MAJOR)"
+          minor_pattern: "(MINOR)"
+          bump_each_commit: true
+      -
+        name: Check if ref is safe for tagging
+        id: is-taggable
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          # if running from a tag ref, skip tagging
+          if [[ "${GITHUB_EVENT_NAME}" = "pull_request" ]]; then
+            echo "Skipping tagging. Running from pull request."
+            echo "taggable=false" | tee -a "$GITHUB_OUTPUT"
+            exit 0
+          fi
+        
+          # if running from a tag ref, skip tagging
+          if [[ "${GITHUB_REF_TYPE}" = "tag" ]]; then
+            echo "Skipping tagging. Running from tag ref."
+            echo "taggable=false" | tee -a "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # if running from non-default branch, skip tagging
+          if [[ "${GITHUB_REF_NAME}" != "${DEFAULT_BRANCH}" ]]; then
+            echo "Skipping tagging. Running from non-default branch (${GITHUB_REF_NAME})."
+            echo "taggable=false" | tee -a "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "taggable=true" | tee -a "$GITHUB_OUTPUT"
+      -
+        name: Tag commit
+        if: ${{ steps.is-taggable.outputs.taggable == 'true' }}
+        env:
+          TAG: ${{ steps.generate-version.outputs.version_tag }}
+        run: |
+          # if tag already exists, exit early
+          if git show-ref --tags "${TAG}" --quiet; then
+            echo "Already tagged (${TAG})"
+            exit 0
+          fi
+
+          # otherwise tag and push
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag "$TAG" -m "$TAG"
+          git push origin "$TAG"
+      -
+        name: Generate release
+        if: ${{ steps.is-taggable.outputs.taggable == 'true' }}
+        env:
+          GH_TOKEN: ${{ steps.bot-token.outputs.token }}
+          TITLE: ${{ steps.generate-version.outputs.version }}
+          TAG: ${{ steps.generate-version.outputs.version_tag }}
+        run: |
+          # if the release already exists, exit early
+          if gh release view "${TAG}" > /dev/null; then
+            echo "Skipping release. Release already exists."
+            echo "${{ github.server_url }}/${{ github.repository }}/releases/tag/${TAG}"
+            exit 0
+          fi
+
+          gh release create "${TAG}" \
+            --verify-tag \
+            --title "${TITLE}" \
+            --generate-notes
+
+  build-and-push:
+    needs: 
+      - detect-changes
+      - tag-and-release
+    if: needs.detect-changes.outputs.source-changed == 'true'
+    uses: ./.github/workflows/docker-build.yml
+    with:
+      PUSH: true
+    secrets: inherit

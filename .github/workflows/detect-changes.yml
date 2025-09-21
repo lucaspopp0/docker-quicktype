@@ -1,0 +1,51 @@
+name: detect-changes
+
+on:
+  workflow_call:
+    secrets:
+      NPM_PAT:
+        required: true
+    outputs:
+      source-changed:
+        value: ${{ jobs.detect-changes.outputs.source-changed }}
+      ci-changes:
+        value: ${{ jobs.detect-changes.outputs.ci-changed }}
+
+permissions:
+  contents: read
+  pull-requests: write
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      source-changed: ${{ steps.changed-paths.outputs.source == 'true' }}
+      ci-changed: ${{ steps.changed-paths.outputs.ci == 'true' }}
+    steps:
+      -
+        uses: actions/checkout@v5
+      -
+        name: Check for changes
+        uses: dorny/paths-filter@v3
+        id: changed-paths
+        with:
+          filters: |
+            source:
+              - 'docker-quicktype/**'
+            ci:
+              - '.github/**'
+              - '.gitignore'
+              - 'Makefile'
+              - 'scripts/**'
+      -
+        name: Update PR labels
+        if: github.event_name == 'pull_request'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: |
+            ${{ steps.changed-paths.outputs.ci == 'true' && 'ci' || '' }}
