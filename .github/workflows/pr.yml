@@ -7,13 +7,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: true
 
-permissions:
-  contents: write
-  pull-requests: write
-  id-token: write
-  packages: write
-  actions: read
-
 defaults:
   run:
     shell: bash
@@ -22,11 +15,18 @@ jobs:
 
   detect-changes:
     uses: ./.github/workflows/detect-changes.yml
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     secrets: inherit
 
   check-source:
+    permissions: write-all
     needs: detect-changes
-    if: needs.detect-changes.outputs.source-changed == 'true'
+    if: |
+      needs.detect-changes.outputs.source-changed == 'true' ||
+      needs.detect-changes.outputs.ci-changed == 'true'
     uses: ./.github/workflows/docker-build.yml
     secrets: inherit
     with:
@@ -38,6 +38,10 @@ jobs:
       - detect-changes
       - check-source
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     steps:
       -
         name: Validate jobs

@@ -15,9 +15,7 @@ on:
       BOT_PRIVATE_KEY:
         required: true
 
-permissions:
-  contents: read
-  id-token: write
+permissions: write-all
 
 defaults:
   run:
@@ -28,10 +26,8 @@ env:
 
 jobs:
 
-  build:
-    name: ${{ inputs.PUSH && 'build-and-push' || 'build' }}
+  docker-build:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
     steps:
       - 
         name: Generate bot token
@@ -132,8 +128,11 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository_owner }}/quicktype
           tags: |
-            type=ref,event=branch
             type=ref,event=pr
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
             type=sha
       -
         uses: docker/build-push-action@v5
