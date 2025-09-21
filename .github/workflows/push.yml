@@ -21,6 +21,10 @@ jobs:
 
   detect-changes:
     uses: ./.github/workflows/detect-changes.yml
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     secrets: inherit
 
   tag-and-release:
@@ -33,6 +37,10 @@ jobs:
     outputs:
       version: ${{ steps.generate-version.outputs.version }}
       version-tag: ${{ steps.generate-version.outputs.version_tag }}
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     steps:
       - 
         name: Generate bot token
@@ -120,6 +128,7 @@ jobs:
             --generate-notes
 
   build-and-push:
+    permissions: write-all
     needs: 
       - detect-changes
       - tag-and-release

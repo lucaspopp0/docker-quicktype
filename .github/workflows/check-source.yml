@@ -8,10 +8,7 @@ on:
       BOT_PRIVATE_KEY:
         required: true
 
-permissions:
-  contents: read
-  id-token: write
-  packages: write
+permissions: write-all
 
 defaults:
   run:
