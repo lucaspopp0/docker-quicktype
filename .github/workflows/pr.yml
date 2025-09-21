@@ -25,7 +25,9 @@ jobs:
 
   check-source:
     needs: detect-changes
-    if: needs.detect-changes.outputs.source-changed == 'true'
+    if: |
+      needs.detect-changes.outputs.source-changed == 'true' ||
+      needs.detect-changes.outputs.ci-changed == 'true'
     uses: ./.github/workflows/check-source.yml
     secrets: inherit
 

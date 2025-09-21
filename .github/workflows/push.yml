@@ -27,6 +27,7 @@ jobs:
     needs: detect-changes
     if: |
       needs.detect-changes.outputs.source-changed == 'true' ||
+      needs.detect-changes.outputs.ci-changed == 'true' ||
       github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     outputs:

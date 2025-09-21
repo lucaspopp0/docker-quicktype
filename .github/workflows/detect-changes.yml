@@ -5,7 +5,7 @@ on:
     outputs:
       source-changed:
         value: ${{ jobs.detect-changes.outputs.source-changed }}
-      ci-changes:
+      ci-changed:
         value: ${{ jobs.detect-changes.outputs.ci-changed }}
 
 permissions:
