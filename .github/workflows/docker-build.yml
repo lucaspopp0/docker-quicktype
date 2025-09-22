@@ -152,15 +152,14 @@ jobs:
           tags: ${{ steps.image-tag.outputs.slug }}
           labels: ${{ steps.meta.outputs.labels }}
       -
-        run: docker image ls
-      -
         name: Generate example
         working-directory: example
         run: |
           rm -rf outputs/*
+          mkdir -p outputs/typescript
+          mkdir -p outputs/golang
           
           echo "Generating TypeScript schemas"
-          mkdir -p outputs/typescript
           docker run \
             -v "$(pwd):/example" \
             "${{ steps.image-tag.outputs.slug }}" \
@@ -170,7 +169,6 @@ jobs:
               --out "/example/outputs/typescript/index.ts"
 
           echo "Generating Go schemas"
-          mkdir -p outputs/golang
           docker run \
             -v "$(pwd):/example" \
             "${{ steps.image-tag.outputs.slug }}" \
