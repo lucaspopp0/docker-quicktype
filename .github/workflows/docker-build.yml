@@ -136,7 +136,7 @@ jobs:
         run: |
           docker run --rm \
             -v "$(pwd):/example" \
-            "$IMAGE_ID" \
+            "${{ steps.meta.outputs.tags }}" \
               "/example/inputs/jsonschema/*" \
               -o "/example/outputs/swift/Models.swift" \
               --src-lang schema \
