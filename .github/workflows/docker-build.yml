@@ -153,6 +153,7 @@ jobs:
           IMAGE="local-quicktype:latest"
           docker build . -t "$IMAGE"
 
+          cd example
           rm -rf outputs/*
           touch outputs/.gitkeep
           mkdir -p outputs/typescript
