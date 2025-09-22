@@ -49,7 +49,7 @@ jobs:
           DOCKER_NODE_VERSION=v$(cat Dockerfile \
               | grep 'FROM node:' \
               | head -n 1 \
-              | sed -E 's/FROM node:([^ ]+).*/\1/')
+              | sed -E 's/FROM node:([^ -]+).*/\1/')
 
           echo "docker-node-version=$DOCKER_NODE_VERSION" | tee -a "$GITHUB_OUTPUT"
 
