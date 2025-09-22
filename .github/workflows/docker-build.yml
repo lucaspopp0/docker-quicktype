@@ -120,22 +120,42 @@ jobs:
             type=semver,pattern={{version}}
             type=ref,event=pr
       -
+        name: Determine image tag
+        id: image-tag
+        env:
+          IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/quicktype
+        run: |
+          IMAGE_TAG=""
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            IMAGE_TAG="$GITHUB_REF_NAME"
+          elif [[ "${{ inputs.PUSH }}" == "true" ]];
+            >&2 echo "Can only push from tags"
+            exit 1
+          fi
+
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
+            IMAGE_TAG="pr-${{ github.event.number }}"
+          else
+            IMAGE_TAG="${GITHUB_EVENT_NAME}-${GITHUB_RUN_ID}"
+          fi
+
+          echo "tag=$IMAGE_TAG" | tee -a "$GITHUB_OUTPUT"
+          echo "slug=$IMAGE_NAME:$IMAGE_TAG" | tee -a "$GITHUB_OUTPUT"
+      -
         uses: docker/build-push-action@v6
         id: docker-build
         with:
           context: ./docker-quicktype
           push: ${{ inputs.PUSH }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.image-tag.outputs.slug }}
           labels: ${{ steps.meta.outputs.labels }}
       -
         name: Generate example
         working-directory: example
-        env:
-          IMAGE_ID: ${{ steps.docker-build.outputs.imageid }}
         run: |
           docker run --rm \
             -v "$(pwd):/example" \
-            "${{ steps.meta.outputs.tags }}" \
+            "${{ steps.image-tag.outputs.slug }}" \
               "/example/inputs/jsonschema/*" \
               -o "/example/outputs/swift/Models.swift" \
               --src-lang schema \
