@@ -148,7 +148,7 @@ jobs:
         with:
           context: ./docker-quicktype
           push: ${{ inputs.PUSH }}
-          tags: ${{ steps.image-tag.outputs.slug }}
+          tags: ${{ github.ref_type == 'tag' && steps.meta.outputs.tags || steps.image-tag.outputs.slug }}
           labels: ${{ steps.meta.outputs.labels }}
       -
         name: Generate example
