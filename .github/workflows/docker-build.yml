@@ -114,10 +114,11 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ inputs.PUSH && format('ghcr.io/{0}/quicktype', github.repository_owner) || 'local-quicktype' }}
+          flavor: |
+            latest=true
           tags: |
             type=semver,pattern={{version}}
             type=ref,event=pr
-            type=latest,event=ref,enabled=true
       -
         uses: docker/build-push-action@v6
         id: docker-build
