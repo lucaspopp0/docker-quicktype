@@ -39,6 +39,7 @@ jobs:
           fetch-depth: 0
       -
         id: check-versions
+        if: github.event_name == 'pull_request'
         name: Check node versions
         working-directory: docker-quicktype
         run: |
