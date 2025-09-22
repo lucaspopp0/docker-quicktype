@@ -23,46 +23,10 @@ defaults:
 
 jobs:
 
-  docker-push:
-    name: docker-push (${{ github.ref_name }})
+  release:
+    name: release (${{ github.ref_name }})
     permissions: write-all
     uses: ./.github/workflows/docker-build.yml
     with:
       PUSH: true
     secrets: inherit
-
-  release:
-    needs: [docker-push]
-    permissions:
-      contents: read
-      id-token: write
-    runs-on: ubuntu-latest
-    steps: 
-      - 
-        name: Generate bot token
-        id: bot-token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.BOT_APP_ID }}
-          private_key: ${{ secrets.BOT_PRIVATE_KEY }}
-      -
-        uses: actions/checkout@v5
-        with:
-          token: ${{ steps.bot-token.outputs.token }}
-      -
-        name: Generate release
-        env:
-          GH_TOKEN: ${{ steps.bot-token.outputs.token }}
-          TAG: ${{ github.ref_name }}
-        run: |
-          # if the release already exists, exit early
-          if gh release view "${TAG}" > /dev/null; then
-            echo "Skipping release. Release already exists."
-            echo "${{ github.server_url }}/${{ github.repository }}/releases/tag/${TAG}"
-            exit 0
-          fi
-
-          gh release create "${TAG}" \
-            --verify-tag \
-            --title "${TAG}" \
-            --generate-notes
