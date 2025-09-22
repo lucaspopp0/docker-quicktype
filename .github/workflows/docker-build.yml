@@ -199,6 +199,7 @@ jobs:
           commit_message: "🤖 re-generate example"
           repo: ${{ github.repository }}
           branch: ${{ github.head_ref || github.ref_name }}
+          file_pattern: example/outputs
       -
         name: Fail if changes
         if: ${{ steps.example-changes.outputs.detected == 'true' }}
