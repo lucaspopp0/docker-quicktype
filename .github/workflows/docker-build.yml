@@ -160,9 +160,9 @@ jobs:
           docker run \
             -v "$(pwd):/example" \
             "${{ steps.image-tag.outputs.slug }}" \
-              "/example/inputs/jsonschema" \
-              -o "/example/outputs/swift/Models.swift" \
+              --src "/example/inputs/jsonschema" \
               --src-lang schema \
+              --out "/example/outputs/swift/Models.swift" \
               --lang swift \
               --swift-5-support \
               --access-level public \
