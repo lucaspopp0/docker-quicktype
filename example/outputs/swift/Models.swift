@@ -1,39 +1,49 @@
 // This file was generated from JSON Schema using quicktype, do not modify it directly.
 // To parse the JSON, add this file to your project and do:
 //
-//   let friendship = try Friendship(json)
-//   let game = try Game(json)
-//   let gameMember = try GameMember(json)
-//   let gameRow = try GameRow(json)
-//   let gameSlot = try GameSlot(json)
-//   let user = try User(json)
-//   let timestamp = try Timestamp(json)
+//   let chinesecheckersV1FriendshipJsonschemaStrict = try ChinesecheckersV1FriendshipJsonschemaStrict(json)
+//   let chinesecheckersV1GameJsonschemaStrict = try ChinesecheckersV1GameJsonschemaStrict(json)
+//   let chinesecheckersV1GameMemberJsonschemaStrict = try ChinesecheckersV1GameMemberJsonschemaStrict(json)
+//   let chinesecheckersV1GameRowJsonschemaStrict = try ChinesecheckersV1GameRowJsonschemaStrict(json)
+//   let chinesecheckersV1GameSlotJsonschemaStrict = try ChinesecheckersV1GameSlotJsonschemaStrict(json)
+//   let chinesecheckersV1UserJsonschemaStrict = try ChinesecheckersV1UserJsonschemaStrict(json)
+//   let googleProtobufTimestampJsonschemaStrict = try GoogleProtobufTimestampJsonschemaStrict(json)
 
 import Foundation
 
-// MARK: - Friendship
-public struct Friendship: Codable {
-    public let acceptedDate: Date?
-    public let initiator: String
-    public let requestedDate: Date?
-    public let status: FriendshipStatus
-    public let uid1, uid2: String
+// MARK: - ChinesecheckersV1FriendshipJsonschemaStrict
+public struct ChinesecheckersV1FriendshipJsonschemaStrict: Codable {
+    public let id: String
+    public let schema: String
+    public let additionalProperties: Bool
+    public let properties: ChinesecheckersV1FriendshipJsonschemaStrictProperties
+    public let chinesecheckersV1FriendshipJsonschemaStrictRequired: [String]
+    public let title, type: String
 
-    public init(acceptedDate: Date?, initiator: String, requestedDate: Date?, status: FriendshipStatus, uid1: String, uid2: String) {
-        self.acceptedDate = acceptedDate
-        self.initiator = initiator
-        self.requestedDate = requestedDate
-        self.status = status
-        self.uid1 = uid1
-        self.uid2 = uid2
+    public enum CodingKeys: String, CodingKey {
+        case id
+        case schema
+        case additionalProperties, properties
+        case chinesecheckersV1FriendshipJsonschemaStrictRequired
+        case title, type
+    }
+
+    public init(id: String, schema: String, additionalProperties: Bool, properties: ChinesecheckersV1FriendshipJsonschemaStrictProperties, chinesecheckersV1FriendshipJsonschemaStrictRequired: [String], title: String, type: String) {
+        self.id = id
+        self.schema = schema
+        self.additionalProperties = additionalProperties
+        self.properties = properties
+        self.chinesecheckersV1FriendshipJsonschemaStrictRequired = chinesecheckersV1FriendshipJsonschemaStrictRequired
+        self.title = title
+        self.type = type
     }
 }
 
-// MARK: Friendship convenience initializers and mutators
+// MARK: ChinesecheckersV1FriendshipJsonschemaStrict convenience initializers and mutators
 
-public extension Friendship {
+public extension ChinesecheckersV1FriendshipJsonschemaStrict {
     init(data: Data) throws {
-        self = try newJSONDecoder().decode(Friendship.self, from: data)
+        self = try newJSONDecoder().decode(ChinesecheckersV1FriendshipJsonschemaStrict.self, from: data)
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -48,14 +58,79 @@ public extension Friendship {
     }
 
     func with(
-        acceptedDate: Date?? = nil,
-        initiator: String? = nil,
-        requestedDate: Date?? = nil,
-        status: FriendshipStatus? = nil,
-        uid1: String? = nil,
-        uid2: String? = nil
-    ) -> Friendship {
-        return Friendship(
+        id: String? = nil,
+        schema: String? = nil,
+        additionalProperties: Bool? = nil,
+        properties: ChinesecheckersV1FriendshipJsonschemaStrictProperties? = nil,
+        chinesecheckersV1FriendshipJsonschemaStrictRequired: [String]? = nil,
+        title: String? = nil,
+        type: String? = nil
+    ) -> ChinesecheckersV1FriendshipJsonschemaStrict {
+        return ChinesecheckersV1FriendshipJsonschemaStrict(
+            id: id ?? self.id,
+            schema: schema ?? self.schema,
+            additionalProperties: additionalProperties ?? self.additionalProperties,
+            properties: properties ?? self.properties,
+            chinesecheckersV1FriendshipJsonschemaStrictRequired: chinesecheckersV1FriendshipJsonschemaStrictRequired ?? self.chinesecheckersV1FriendshipJsonschemaStrictRequired,
+            title: title ?? self.title,
+            type: type ?? self.type
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - ChinesecheckersV1FriendshipJsonschemaStrictProperties
+public struct ChinesecheckersV1FriendshipJsonschemaStrictProperties: Codable {
+    public let acceptedDate: AcceptedDate
+    public let initiator: Initiator
+    public let requestedDate: AcceptedDate
+    public let status: Status
+    public let uid1, uid2: Initiator
+
+    public init(acceptedDate: AcceptedDate, initiator: Initiator, requestedDate: AcceptedDate, status: Status, uid1: Initiator, uid2: Initiator) {
+        self.acceptedDate = acceptedDate
+        self.initiator = initiator
+        self.requestedDate = requestedDate
+        self.status = status
+        self.uid1 = uid1
+        self.uid2 = uid2
+    }
+}
+
+// MARK: ChinesecheckersV1FriendshipJsonschemaStrictProperties convenience initializers and mutators
+
+public extension ChinesecheckersV1FriendshipJsonschemaStrictProperties {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(ChinesecheckersV1FriendshipJsonschemaStrictProperties.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        acceptedDate: AcceptedDate? = nil,
+        initiator: Initiator? = nil,
+        requestedDate: AcceptedDate? = nil,
+        status: Status? = nil,
+        uid1: Initiator? = nil,
+        uid2: Initiator? = nil
+    ) -> ChinesecheckersV1FriendshipJsonschemaStrictProperties {
+        return ChinesecheckersV1FriendshipJsonschemaStrictProperties(
             acceptedDate: acceptedDate ?? self.acceptedDate,
             initiator: initiator ?? self.initiator,
             requestedDate: requestedDate ?? self.requestedDate,
@@ -74,37 +149,24 @@ public extension Friendship {
     }
 }
 
-public enum FriendshipStatus: String, Codable {
-    case friendshipStatusAccepted = "FRIENDSHIP_STATUS_ACCEPTED"
-    case friendshipStatusRejected = "FRIENDSHIP_STATUS_REJECTED"
-    case friendshipStatusRequested = "FRIENDSHIP_STATUS_REQUESTED"
-    case friendshipStatusUnspecified = "FRIENDSHIP_STATUS_UNSPECIFIED"
-}
+// MARK: - AcceptedDate
+public struct AcceptedDate: Codable {
+    public let ref: String
 
-// MARK: - Game
-public struct Game: Codable {
-    public let board: [BoardElement]?
-    public let createdDate: Date?
-    public let currentPlayer: Int
-    public let id: String
-    public let players: [String]
-    public let updatedDate: Date?
+    public enum CodingKeys: String, CodingKey {
+        case ref
+    }
 
-    public init(board: [BoardElement]?, createdDate: Date?, currentPlayer: Int, id: String, players: [String], updatedDate: Date?) {
-        self.board = board
-        self.createdDate = createdDate
-        self.currentPlayer = currentPlayer
-        self.id = id
-        self.players = players
-        self.updatedDate = updatedDate
+    public init(ref: String) {
+        self.ref = ref
     }
 }
 
-// MARK: Game convenience initializers and mutators
+// MARK: AcceptedDate convenience initializers and mutators
 
-public extension Game {
+public extension AcceptedDate {
     init(data: Data) throws {
-        self = try newJSONDecoder().decode(Game.self, from: data)
+        self = try newJSONDecoder().decode(AcceptedDate.self, from: data)
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -119,14 +181,248 @@ public extension Game {
     }
 
     func with(
-        board: [BoardElement]?? = nil,
-        createdDate: Date?? = nil,
-        currentPlayer: Int? = nil,
+        ref: String? = nil
+    ) -> AcceptedDate {
+        return AcceptedDate(
+            ref: ref ?? self.ref
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - Initiator
+public struct Initiator: Codable {
+    public let type: TypeEnum
+
+    public init(type: TypeEnum) {
+        self.type = type
+    }
+}
+
+// MARK: Initiator convenience initializers and mutators
+
+public extension Initiator {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Initiator.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        type: TypeEnum? = nil
+    ) -> Initiator {
+        return Initiator(
+            type: type ?? self.type
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+public enum TypeEnum: String, Codable {
+    case string = "string"
+}
+
+// MARK: - Status
+public struct Status: Codable {
+    public let statusEnum: [String]
+    public let title: String
+    public let type: TypeEnum
+
+    public enum CodingKeys: String, CodingKey {
+        case statusEnum
+        case title, type
+    }
+
+    public init(statusEnum: [String], title: String, type: TypeEnum) {
+        self.statusEnum = statusEnum
+        self.title = title
+        self.type = type
+    }
+}
+
+// MARK: Status convenience initializers and mutators
+
+public extension Status {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Status.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        statusEnum: [String]? = nil,
+        title: String? = nil,
+        type: TypeEnum? = nil
+    ) -> Status {
+        return Status(
+            statusEnum: statusEnum ?? self.statusEnum,
+            title: title ?? self.title,
+            type: type ?? self.type
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - ChinesecheckersV1GameJsonschemaStrict
+public struct ChinesecheckersV1GameJsonschemaStrict: Codable {
+    public let id: String
+    public let schema: String
+    public let additionalProperties: Bool
+    public let properties: ChinesecheckersV1GameJsonschemaStrictProperties
+    public let chinesecheckersV1GameJsonschemaStrictRequired: [String]
+    public let title, type: String
+
+    public enum CodingKeys: String, CodingKey {
+        case id
+        case schema
+        case additionalProperties, properties
+        case chinesecheckersV1GameJsonschemaStrictRequired
+        case title, type
+    }
+
+    public init(id: String, schema: String, additionalProperties: Bool, properties: ChinesecheckersV1GameJsonschemaStrictProperties, chinesecheckersV1GameJsonschemaStrictRequired: [String], title: String, type: String) {
+        self.id = id
+        self.schema = schema
+        self.additionalProperties = additionalProperties
+        self.properties = properties
+        self.chinesecheckersV1GameJsonschemaStrictRequired = chinesecheckersV1GameJsonschemaStrictRequired
+        self.title = title
+        self.type = type
+    }
+}
+
+// MARK: ChinesecheckersV1GameJsonschemaStrict convenience initializers and mutators
+
+public extension ChinesecheckersV1GameJsonschemaStrict {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(ChinesecheckersV1GameJsonschemaStrict.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
         id: String? = nil,
-        players: [String]? = nil,
-        updatedDate: Date?? = nil
-    ) -> Game {
-        return Game(
+        schema: String? = nil,
+        additionalProperties: Bool? = nil,
+        properties: ChinesecheckersV1GameJsonschemaStrictProperties? = nil,
+        chinesecheckersV1GameJsonschemaStrictRequired: [String]? = nil,
+        title: String? = nil,
+        type: String? = nil
+    ) -> ChinesecheckersV1GameJsonschemaStrict {
+        return ChinesecheckersV1GameJsonschemaStrict(
+            id: id ?? self.id,
+            schema: schema ?? self.schema,
+            additionalProperties: additionalProperties ?? self.additionalProperties,
+            properties: properties ?? self.properties,
+            chinesecheckersV1GameJsonschemaStrictRequired: chinesecheckersV1GameJsonschemaStrictRequired ?? self.chinesecheckersV1GameJsonschemaStrictRequired,
+            title: title ?? self.title,
+            type: type ?? self.type
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - ChinesecheckersV1GameJsonschemaStrictProperties
+public struct ChinesecheckersV1GameJsonschemaStrictProperties: Codable {
+    public let board: Board
+    public let createdDate: AcceptedDate
+    public let currentPlayer: CurrentPlayer
+    public let id: Initiator
+    public let players: Players
+    public let updatedDate: AcceptedDate
+
+    public init(board: Board, createdDate: AcceptedDate, currentPlayer: CurrentPlayer, id: Initiator, players: Players, updatedDate: AcceptedDate) {
+        self.board = board
+        self.createdDate = createdDate
+        self.currentPlayer = currentPlayer
+        self.id = id
+        self.players = players
+        self.updatedDate = updatedDate
+    }
+}
+
+// MARK: ChinesecheckersV1GameJsonschemaStrictProperties convenience initializers and mutators
+
+public extension ChinesecheckersV1GameJsonschemaStrictProperties {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(ChinesecheckersV1GameJsonschemaStrictProperties.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        board: Board? = nil,
+        createdDate: AcceptedDate? = nil,
+        currentPlayer: CurrentPlayer? = nil,
+        id: Initiator? = nil,
+        players: Players? = nil,
+        updatedDate: AcceptedDate? = nil
+    ) -> ChinesecheckersV1GameJsonschemaStrictProperties {
+        return ChinesecheckersV1GameJsonschemaStrictProperties(
             board: board ?? self.board,
             createdDate: createdDate ?? self.createdDate,
             currentPlayer: currentPlayer ?? self.currentPlayer,
@@ -145,20 +441,22 @@ public extension Game {
     }
 }
 
-// MARK: - BoardElement
-public struct BoardElement: Codable {
-    public let slots: [SlotElement]
+// MARK: - Board
+public struct Board: Codable {
+    public let items: AcceptedDate
+    public let type: String
 
-    public init(slots: [SlotElement]) {
-        self.slots = slots
+    public init(items: AcceptedDate, type: String) {
+        self.items = items
+        self.type = type
     }
 }
 
-// MARK: BoardElement convenience initializers and mutators
+// MARK: Board convenience initializers and mutators
 
-public extension BoardElement {
+public extension Board {
     init(data: Data) throws {
-        self = try newJSONDecoder().decode(BoardElement.self, from: data)
+        self = try newJSONDecoder().decode(Board.self, from: data)
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -173,10 +471,12 @@ public extension BoardElement {
     }
 
     func with(
-        slots: [SlotElement]? = nil
-    ) -> BoardElement {
-        return BoardElement(
-            slots: slots ?? self.slots
+        items: AcceptedDate? = nil,
+        type: String? = nil
+    ) -> Board {
+        return Board(
+            items: items ?? self.items,
+            type: type ?? self.type
         )
     }
 
@@ -189,20 +489,23 @@ public extension BoardElement {
     }
 }
 
-// MARK: - SlotElement
-public struct SlotElement: Codable {
-    public let user: String?
+// MARK: - CurrentPlayer
+public struct CurrentPlayer: Codable {
+    public let maximum, minimum: Int
+    public let type: String
 
-    public init(user: String?) {
-        self.user = user
+    public init(maximum: Int, minimum: Int, type: String) {
+        self.maximum = maximum
+        self.minimum = minimum
+        self.type = type
     }
 }
 
-// MARK: SlotElement convenience initializers and mutators
+// MARK: CurrentPlayer convenience initializers and mutators
 
-public extension SlotElement {
+public extension CurrentPlayer {
     init(data: Data) throws {
-        self = try newJSONDecoder().decode(SlotElement.self, from: data)
+        self = try newJSONDecoder().decode(CurrentPlayer.self, from: data)
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -217,10 +520,14 @@ public extension SlotElement {
     }
 
     func with(
-        user: String?? = nil
-    ) -> SlotElement {
-        return SlotElement(
-            user: user ?? self.user
+        maximum: Int? = nil,
+        minimum: Int? = nil,
+        type: String? = nil
+    ) -> CurrentPlayer {
+        return CurrentPlayer(
+            maximum: maximum ?? self.maximum,
+            minimum: minimum ?? self.minimum,
+            type: type ?? self.type
         )
     }
 
@@ -233,26 +540,149 @@ public extension SlotElement {
     }
 }
 
-// MARK: - GameMember
-public struct GameMember: Codable {
-    public let gameID, userID: String
+// MARK: - Players
+public struct Players: Codable {
+    public let items: Initiator
+    public let type: String
+
+    public init(items: Initiator, type: String) {
+        self.items = items
+        self.type = type
+    }
+}
+
+// MARK: Players convenience initializers and mutators
+
+public extension Players {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Players.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        items: Initiator? = nil,
+        type: String? = nil
+    ) -> Players {
+        return Players(
+            items: items ?? self.items,
+            type: type ?? self.type
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - ChinesecheckersV1GameMemberJsonschemaStrict
+public struct ChinesecheckersV1GameMemberJsonschemaStrict: Codable {
+    public let id: String
+    public let schema: String
+    public let additionalProperties: Bool
+    public let properties: ChinesecheckersV1GameMemberJsonschemaStrictProperties
+    public let chinesecheckersV1GameMemberJsonschemaStrictRequired: [String]
+    public let title, type: String
+
+    public enum CodingKeys: String, CodingKey {
+        case id
+        case schema
+        case additionalProperties, properties
+        case chinesecheckersV1GameMemberJsonschemaStrictRequired
+        case title, type
+    }
+
+    public init(id: String, schema: String, additionalProperties: Bool, properties: ChinesecheckersV1GameMemberJsonschemaStrictProperties, chinesecheckersV1GameMemberJsonschemaStrictRequired: [String], title: String, type: String) {
+        self.id = id
+        self.schema = schema
+        self.additionalProperties = additionalProperties
+        self.properties = properties
+        self.chinesecheckersV1GameMemberJsonschemaStrictRequired = chinesecheckersV1GameMemberJsonschemaStrictRequired
+        self.title = title
+        self.type = type
+    }
+}
+
+// MARK: ChinesecheckersV1GameMemberJsonschemaStrict convenience initializers and mutators
+
+public extension ChinesecheckersV1GameMemberJsonschemaStrict {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(ChinesecheckersV1GameMemberJsonschemaStrict.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        id: String? = nil,
+        schema: String? = nil,
+        additionalProperties: Bool? = nil,
+        properties: ChinesecheckersV1GameMemberJsonschemaStrictProperties? = nil,
+        chinesecheckersV1GameMemberJsonschemaStrictRequired: [String]? = nil,
+        title: String? = nil,
+        type: String? = nil
+    ) -> ChinesecheckersV1GameMemberJsonschemaStrict {
+        return ChinesecheckersV1GameMemberJsonschemaStrict(
+            id: id ?? self.id,
+            schema: schema ?? self.schema,
+            additionalProperties: additionalProperties ?? self.additionalProperties,
+            properties: properties ?? self.properties,
+            chinesecheckersV1GameMemberJsonschemaStrictRequired: chinesecheckersV1GameMemberJsonschemaStrictRequired ?? self.chinesecheckersV1GameMemberJsonschemaStrictRequired,
+            title: title ?? self.title,
+            type: type ?? self.type
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - ChinesecheckersV1GameMemberJsonschemaStrictProperties
+public struct ChinesecheckersV1GameMemberJsonschemaStrictProperties: Codable {
+    public let gameID, userID: Initiator
 
     public enum CodingKeys: String, CodingKey {
         case gameID
         case userID
     }
 
-    public init(gameID: String, userID: String) {
+    public init(gameID: Initiator, userID: Initiator) {
         self.gameID = gameID
         self.userID = userID
     }
 }
 
-// MARK: GameMember convenience initializers and mutators
+// MARK: ChinesecheckersV1GameMemberJsonschemaStrictProperties convenience initializers and mutators
 
-public extension GameMember {
+public extension ChinesecheckersV1GameMemberJsonschemaStrictProperties {
     init(data: Data) throws {
-        self = try newJSONDecoder().decode(GameMember.self, from: data)
+        self = try newJSONDecoder().decode(ChinesecheckersV1GameMemberJsonschemaStrictProperties.self, from: data)
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -267,10 +697,10 @@ public extension GameMember {
     }
 
     func with(
-        gameID: String? = nil,
-        userID: String? = nil
-    ) -> GameMember {
-        return GameMember(
+        gameID: Initiator? = nil,
+        userID: Initiator? = nil
+    ) -> ChinesecheckersV1GameMemberJsonschemaStrictProperties {
+        return ChinesecheckersV1GameMemberJsonschemaStrictProperties(
             gameID: gameID ?? self.gameID,
             userID: userID ?? self.userID
         )
@@ -285,20 +715,39 @@ public extension GameMember {
     }
 }
 
-// MARK: - GameRow
-public struct GameRow: Codable {
-    public let slots: [SlotElement]
+// MARK: - ChinesecheckersV1GameRowJsonschemaStrict
+public struct ChinesecheckersV1GameRowJsonschemaStrict: Codable {
+    public let id: String
+    public let schema: String
+    public let additionalProperties: Bool
+    public let properties: ChinesecheckersV1GameRowJsonschemaStrictProperties
+    public let chinesecheckersV1GameRowJsonschemaStrictRequired: [String]
+    public let title, type: String
 
-    public init(slots: [SlotElement]) {
-        self.slots = slots
+    public enum CodingKeys: String, CodingKey {
+        case id
+        case schema
+        case additionalProperties, properties
+        case chinesecheckersV1GameRowJsonschemaStrictRequired
+        case title, type
+    }
+
+    public init(id: String, schema: String, additionalProperties: Bool, properties: ChinesecheckersV1GameRowJsonschemaStrictProperties, chinesecheckersV1GameRowJsonschemaStrictRequired: [String], title: String, type: String) {
+        self.id = id
+        self.schema = schema
+        self.additionalProperties = additionalProperties
+        self.properties = properties
+        self.chinesecheckersV1GameRowJsonschemaStrictRequired = chinesecheckersV1GameRowJsonschemaStrictRequired
+        self.title = title
+        self.type = type
     }
 }
 
-// MARK: GameRow convenience initializers and mutators
+// MARK: ChinesecheckersV1GameRowJsonschemaStrict convenience initializers and mutators
 
-public extension GameRow {
+public extension ChinesecheckersV1GameRowJsonschemaStrict {
     init(data: Data) throws {
-        self = try newJSONDecoder().decode(GameRow.self, from: data)
+        self = try newJSONDecoder().decode(ChinesecheckersV1GameRowJsonschemaStrict.self, from: data)
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -313,9 +762,65 @@ public extension GameRow {
     }
 
     func with(
-        slots: [SlotElement]? = nil
-    ) -> GameRow {
-        return GameRow(
+        id: String? = nil,
+        schema: String? = nil,
+        additionalProperties: Bool? = nil,
+        properties: ChinesecheckersV1GameRowJsonschemaStrictProperties? = nil,
+        chinesecheckersV1GameRowJsonschemaStrictRequired: [String]? = nil,
+        title: String? = nil,
+        type: String? = nil
+    ) -> ChinesecheckersV1GameRowJsonschemaStrict {
+        return ChinesecheckersV1GameRowJsonschemaStrict(
+            id: id ?? self.id,
+            schema: schema ?? self.schema,
+            additionalProperties: additionalProperties ?? self.additionalProperties,
+            properties: properties ?? self.properties,
+            chinesecheckersV1GameRowJsonschemaStrictRequired: chinesecheckersV1GameRowJsonschemaStrictRequired ?? self.chinesecheckersV1GameRowJsonschemaStrictRequired,
+            title: title ?? self.title,
+            type: type ?? self.type
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - ChinesecheckersV1GameRowJsonschemaStrictProperties
+public struct ChinesecheckersV1GameRowJsonschemaStrictProperties: Codable {
+    public let slots: Board
+
+    public init(slots: Board) {
+        self.slots = slots
+    }
+}
+
+// MARK: ChinesecheckersV1GameRowJsonschemaStrictProperties convenience initializers and mutators
+
+public extension ChinesecheckersV1GameRowJsonschemaStrictProperties {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(ChinesecheckersV1GameRowJsonschemaStrictProperties.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        slots: Board? = nil
+    ) -> ChinesecheckersV1GameRowJsonschemaStrictProperties {
+        return ChinesecheckersV1GameRowJsonschemaStrictProperties(
             slots: slots ?? self.slots
         )
     }
@@ -329,20 +834,35 @@ public extension GameRow {
     }
 }
 
-// MARK: - GameSlot
-public struct GameSlot: Codable {
-    public let user: String?
+// MARK: - ChinesecheckersV1GameSlotJsonschemaStrict
+public struct ChinesecheckersV1GameSlotJsonschemaStrict: Codable {
+    public let id: String
+    public let schema: String
+    public let additionalProperties: Bool
+    public let properties: ChinesecheckersV1GameSlotJsonschemaStrictProperties
+    public let title, type: String
 
-    public init(user: String?) {
-        self.user = user
+    public enum CodingKeys: String, CodingKey {
+        case id
+        case schema
+        case additionalProperties, properties, title, type
+    }
+
+    public init(id: String, schema: String, additionalProperties: Bool, properties: ChinesecheckersV1GameSlotJsonschemaStrictProperties, title: String, type: String) {
+        self.id = id
+        self.schema = schema
+        self.additionalProperties = additionalProperties
+        self.properties = properties
+        self.title = title
+        self.type = type
     }
 }
 
-// MARK: GameSlot convenience initializers and mutators
+// MARK: ChinesecheckersV1GameSlotJsonschemaStrict convenience initializers and mutators
 
-public extension GameSlot {
+public extension ChinesecheckersV1GameSlotJsonschemaStrict {
     init(data: Data) throws {
-        self = try newJSONDecoder().decode(GameSlot.self, from: data)
+        self = try newJSONDecoder().decode(ChinesecheckersV1GameSlotJsonschemaStrict.self, from: data)
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -357,9 +877,63 @@ public extension GameSlot {
     }
 
     func with(
-        user: String?? = nil
-    ) -> GameSlot {
-        return GameSlot(
+        id: String? = nil,
+        schema: String? = nil,
+        additionalProperties: Bool? = nil,
+        properties: ChinesecheckersV1GameSlotJsonschemaStrictProperties? = nil,
+        title: String? = nil,
+        type: String? = nil
+    ) -> ChinesecheckersV1GameSlotJsonschemaStrict {
+        return ChinesecheckersV1GameSlotJsonschemaStrict(
+            id: id ?? self.id,
+            schema: schema ?? self.schema,
+            additionalProperties: additionalProperties ?? self.additionalProperties,
+            properties: properties ?? self.properties,
+            title: title ?? self.title,
+            type: type ?? self.type
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - ChinesecheckersV1GameSlotJsonschemaStrictProperties
+public struct ChinesecheckersV1GameSlotJsonschemaStrictProperties: Codable {
+    public let user: Initiator
+
+    public init(user: Initiator) {
+        self.user = user
+    }
+}
+
+// MARK: ChinesecheckersV1GameSlotJsonschemaStrictProperties convenience initializers and mutators
+
+public extension ChinesecheckersV1GameSlotJsonschemaStrictProperties {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(ChinesecheckersV1GameSlotJsonschemaStrictProperties.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        user: Initiator? = nil
+    ) -> ChinesecheckersV1GameSlotJsonschemaStrictProperties {
+        return ChinesecheckersV1GameSlotJsonschemaStrictProperties(
             user: user ?? self.user
         )
     }
@@ -373,26 +947,39 @@ public extension GameSlot {
     }
 }
 
-// MARK: - User
-public struct User: Codable {
-    public let createdDate: Date?
-    public let email, id, name: String
-    public let updatedDate: Date?
+// MARK: - ChinesecheckersV1UserJsonschemaStrict
+public struct ChinesecheckersV1UserJsonschemaStrict: Codable {
+    public let id: String
+    public let schema: String
+    public let additionalProperties: Bool
+    public let properties: ChinesecheckersV1UserJsonschemaStrictProperties
+    public let chinesecheckersV1UserJsonschemaStrictRequired: [String]
+    public let title, type: String
 
-    public init(createdDate: Date?, email: String, id: String, name: String, updatedDate: Date?) {
-        self.createdDate = createdDate
-        self.email = email
+    public enum CodingKeys: String, CodingKey {
+        case id
+        case schema
+        case additionalProperties, properties
+        case chinesecheckersV1UserJsonschemaStrictRequired
+        case title, type
+    }
+
+    public init(id: String, schema: String, additionalProperties: Bool, properties: ChinesecheckersV1UserJsonschemaStrictProperties, chinesecheckersV1UserJsonschemaStrictRequired: [String], title: String, type: String) {
         self.id = id
-        self.name = name
-        self.updatedDate = updatedDate
+        self.schema = schema
+        self.additionalProperties = additionalProperties
+        self.properties = properties
+        self.chinesecheckersV1UserJsonschemaStrictRequired = chinesecheckersV1UserJsonschemaStrictRequired
+        self.title = title
+        self.type = type
     }
 }
 
-// MARK: User convenience initializers and mutators
+// MARK: ChinesecheckersV1UserJsonschemaStrict convenience initializers and mutators
 
-public extension User {
+public extension ChinesecheckersV1UserJsonschemaStrict {
     init(data: Data) throws {
-        self = try newJSONDecoder().decode(User.self, from: data)
+        self = try newJSONDecoder().decode(ChinesecheckersV1UserJsonschemaStrict.self, from: data)
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -407,13 +994,75 @@ public extension User {
     }
 
     func with(
-        createdDate: Date?? = nil,
-        email: String? = nil,
         id: String? = nil,
-        name: String? = nil,
-        updatedDate: Date?? = nil
-    ) -> User {
-        return User(
+        schema: String? = nil,
+        additionalProperties: Bool? = nil,
+        properties: ChinesecheckersV1UserJsonschemaStrictProperties? = nil,
+        chinesecheckersV1UserJsonschemaStrictRequired: [String]? = nil,
+        title: String? = nil,
+        type: String? = nil
+    ) -> ChinesecheckersV1UserJsonschemaStrict {
+        return ChinesecheckersV1UserJsonschemaStrict(
+            id: id ?? self.id,
+            schema: schema ?? self.schema,
+            additionalProperties: additionalProperties ?? self.additionalProperties,
+            properties: properties ?? self.properties,
+            chinesecheckersV1UserJsonschemaStrictRequired: chinesecheckersV1UserJsonschemaStrictRequired ?? self.chinesecheckersV1UserJsonschemaStrictRequired,
+            title: title ?? self.title,
+            type: type ?? self.type
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - ChinesecheckersV1UserJsonschemaStrictProperties
+public struct ChinesecheckersV1UserJsonschemaStrictProperties: Codable {
+    public let createdDate: AcceptedDate
+    public let email, id, name: Initiator
+    public let updatedDate: AcceptedDate
+
+    public init(createdDate: AcceptedDate, email: Initiator, id: Initiator, name: Initiator, updatedDate: AcceptedDate) {
+        self.createdDate = createdDate
+        self.email = email
+        self.id = id
+        self.name = name
+        self.updatedDate = updatedDate
+    }
+}
+
+// MARK: ChinesecheckersV1UserJsonschemaStrictProperties convenience initializers and mutators
+
+public extension ChinesecheckersV1UserJsonschemaStrictProperties {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(ChinesecheckersV1UserJsonschemaStrictProperties.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        createdDate: AcceptedDate? = nil,
+        email: Initiator? = nil,
+        id: Initiator? = nil,
+        name: Initiator? = nil,
+        updatedDate: AcceptedDate? = nil
+    ) -> ChinesecheckersV1UserJsonschemaStrictProperties {
+        return ChinesecheckersV1UserJsonschemaStrictProperties(
             createdDate: createdDate ?? self.createdDate,
             email: email ?? self.email,
             id: id ?? self.id,
@@ -431,7 +1080,70 @@ public extension User {
     }
 }
 
-public typealias Timestamp = Date
+// MARK: - GoogleProtobufTimestampJsonschemaStrict
+public struct GoogleProtobufTimestampJsonschemaStrict: Codable {
+    public let id: String
+    public let schema: String
+    public let format, title: String
+    public let type: TypeEnum
+
+    public enum CodingKeys: String, CodingKey {
+        case id
+        case schema
+        case format, title, type
+    }
+
+    public init(id: String, schema: String, format: String, title: String, type: TypeEnum) {
+        self.id = id
+        self.schema = schema
+        self.format = format
+        self.title = title
+        self.type = type
+    }
+}
+
+// MARK: GoogleProtobufTimestampJsonschemaStrict convenience initializers and mutators
+
+public extension GoogleProtobufTimestampJsonschemaStrict {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(GoogleProtobufTimestampJsonschemaStrict.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        id: String? = nil,
+        schema: String? = nil,
+        format: String? = nil,
+        title: String? = nil,
+        type: TypeEnum? = nil
+    ) -> GoogleProtobufTimestampJsonschemaStrict {
+        return GoogleProtobufTimestampJsonschemaStrict(
+            id: id ?? self.id,
+            schema: schema ?? self.schema,
+            format: format ?? self.format,
+            title: title ?? self.title,
+            type: type ?? self.type
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
 
 // MARK: - Helper functions for creating encoders and decoders
 
