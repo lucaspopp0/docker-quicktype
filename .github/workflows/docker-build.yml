@@ -157,16 +157,29 @@ jobs:
         name: Generate example
         working-directory: example
         run: |
+          rm -rf outputs/*
+          
+          echo "Generating TypeScript schemas"
+          mkdir -p outputs/typescript
           docker run \
             -v "$(pwd):/example" \
             "${{ steps.image-tag.outputs.slug }}" \
-              --src "/example/inputs/jsonschema" \
               --src-lang schema \
-              --out "/example/outputs/swift/Models.swift" \
-              --lang swift \
-              --swift-5-support \
-              --access-level public \
-              --no-coding-keys
+              --src "/example/inputs/jsonschema" \
+              --lang typescript \
+              --out "/example/outputs/typescript/index.ts"
+
+          echo "Generating Go schemas"
+          mkdir -p outputs/golang
+          docker run \
+            -v "$(pwd):/example" \
+            "${{ steps.image-tag.outputs.slug }}" \
+              --src-lang schema \
+              --src "/example/inputs/jsonschema" \
+              --lang go \
+              --out "/example/outputs/golang/models.go" \
+              --package model \
+              --field-tags json,dynamodbav
       -
         name: Check for example changes
         id: example-changes
