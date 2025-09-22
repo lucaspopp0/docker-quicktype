@@ -154,6 +154,8 @@ jobs:
           tags: ${{ steps.image-tag.outputs.slug }}
           labels: ${{ steps.meta.outputs.labels }}
       -
+        run: docker image ls
+      -
         name: Generate example
         working-directory: example
         run: |
