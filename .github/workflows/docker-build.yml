@@ -117,6 +117,7 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
             type=ref,event=pr
+            type=latest,event=ref,enabled=true
       -
         uses: docker/build-push-action@v6
         id: docker-build
