@@ -123,19 +123,19 @@ jobs:
         name: Determine image tag
         id: image-tag
         env:
+          INPUT_PUSH: ${{ inputs.PUSH }}
           IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/quicktype
+          IMAGE_TAG: ""
         run: |
-          IMAGE_TAG=""
-          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
-            IMAGE_TAG="$GITHUB_REF_NAME"
-          elif [[ "${{ inputs.PUSH }}" == "true" ]]; then
-            >&2 echo "Can only push from tags"
-            exit 1
-          fi
-
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
-            IMAGE_TAG="pr-${{ github.event.number }}"
+          if [[ "$INPUTS_PUSH" == "true" ]]; then
+            if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+              IMAGE_TAG="$GITHUB_REF_NAME"
+            else
+              >&2 echo "Can only push from tags"
+              exit 1
+            fi
           else
+            IMAGE_NAME="local-quicktype"
             IMAGE_TAG="${GITHUB_EVENT_NAME}-${GITHUB_RUN_ID}"
           fi
 
