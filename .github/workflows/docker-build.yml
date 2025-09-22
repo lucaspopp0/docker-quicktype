@@ -131,7 +131,7 @@ jobs:
           IMAGE_NAME="$IMAGE_NAME"
           IMAGE_TAG="$IMAGE_TAG"
 
-          if [[ "$INPUTS_PUSH" == "true" ]]; then
+          if [[ "$INPUT_PUSH" == "true" ]]; then
             IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/quicktype"
             IMAGE_TAG="$GITHUB_REF_NAME"
             
