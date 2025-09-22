@@ -121,7 +121,7 @@ jobs:
         uses: docker/build-push-action@v6
         id: docker-build
         with:
-          context: ./docker-quicktype
+          context: .
           push: ${{ inputs.PUSH }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
