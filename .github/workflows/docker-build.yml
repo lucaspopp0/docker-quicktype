@@ -167,7 +167,8 @@ jobs:
               --src-lang schema \
               --src "/example/inputs/jsonschema" \
               --lang typescript \
-              --out "/example/outputs/typescript/index.ts"
+              --out "/example/outputs/typescript/index.ts" \
+              --top-level "Models"
 
           echo "Generating Go schemas"
           docker run \
@@ -178,7 +179,8 @@ jobs:
               --lang go \
               --out "/example/outputs/golang/models.go" \
               --package model \
-              --field-tags json,dynamodbav
+              --field-tags json,dynamodbav \
+              --top-level "Models"
       -
         name: Check for example changes
         id: example-changes
