@@ -24,6 +24,7 @@ defaults:
 jobs:
 
   docker-push:
+    name: docker-push (${{ github.ref_name }})
     permissions: write-all
     uses: ./.github/workflows/docker-build.yml
     with:
