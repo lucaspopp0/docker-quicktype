@@ -138,11 +138,7 @@ jobs:
             fi
           else
             IMAGE_NAME="local-quicktype"
-            if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
-              IMAGE_TAG="pr-${{ github.event.number }}"
-            else
-              IMAGE_TAG="${GITHUB_EVENT_NAME}-${GITHUB_RUN_ID}"
-            fi
+            IMAGE_TAG="latest"
           fi
 
           echo "tag=$IMAGE_TAG" | tee -a "$GITHUB_OUTPUT"
