@@ -115,7 +115,7 @@ jobs:
         with:
           images: ${{ inputs.PUSH && format('ghcr.io/{0}/quicktype', github.repository_owner) || 'local-quicktype' }}
           flavor: |
-            latest=true
+            latest=${{ inputs.PUSH && 'auto' || 'true' }}
           tags: |
             type=semver,pattern={{version}}
             type=ref,event=pr
