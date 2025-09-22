@@ -1,112 +1,112 @@
 // Code generated from JSON Schema using quicktype. DO NOT EDIT.
 // To parse and unparse this JSON data, add this code to your project and do:
 //
-//    chinesecheckersV1FriendshipJsonschemaStrict, err := UnmarshalChinesecheckersV1FriendshipJsonschemaStrict(bytes)
-//    bytes, err = chinesecheckersV1FriendshipJsonschemaStrict.Marshal()
+//    friendship, err := UnmarshalFriendship(bytes)
+//    bytes, err = friendship.Marshal()
 //
-//    chinesecheckersV1GameJsonschemaStrict, err := UnmarshalChinesecheckersV1GameJsonschemaStrict(bytes)
-//    bytes, err = chinesecheckersV1GameJsonschemaStrict.Marshal()
+//    game, err := UnmarshalGame(bytes)
+//    bytes, err = game.Marshal()
 //
-//    chinesecheckersV1GameMemberJsonschemaStrict, err := UnmarshalChinesecheckersV1GameMemberJsonschemaStrict(bytes)
-//    bytes, err = chinesecheckersV1GameMemberJsonschemaStrict.Marshal()
+//    gameMember, err := UnmarshalGameMember(bytes)
+//    bytes, err = gameMember.Marshal()
 //
-//    chinesecheckersV1GameRowJsonschemaStrict, err := UnmarshalChinesecheckersV1GameRowJsonschemaStrict(bytes)
-//    bytes, err = chinesecheckersV1GameRowJsonschemaStrict.Marshal()
+//    gameRow, err := UnmarshalGameRow(bytes)
+//    bytes, err = gameRow.Marshal()
 //
-//    chinesecheckersV1GameSlotJsonschemaStrict, err := UnmarshalChinesecheckersV1GameSlotJsonschemaStrict(bytes)
-//    bytes, err = chinesecheckersV1GameSlotJsonschemaStrict.Marshal()
+//    gameSlot, err := UnmarshalGameSlot(bytes)
+//    bytes, err = gameSlot.Marshal()
 //
-//    chinesecheckersV1UserJsonschemaStrict, err := UnmarshalChinesecheckersV1UserJsonschemaStrict(bytes)
-//    bytes, err = chinesecheckersV1UserJsonschemaStrict.Marshal()
+//    timestamp, err := UnmarshalTimestamp(bytes)
+//    bytes, err = timestamp.Marshal()
 //
-//    googleProtobufTimestampJsonschemaStrict, err := UnmarshalGoogleProtobufTimestampJsonschemaStrict(bytes)
-//    bytes, err = googleProtobufTimestampJsonschemaStrict.Marshal()
+//    user, err := UnmarshalUser(bytes)
+//    bytes, err = user.Marshal()
 
 package model
 
 import "encoding/json"
 
-func UnmarshalChinesecheckersV1FriendshipJsonschemaStrict(data []byte) (ChinesecheckersV1FriendshipJsonschemaStrict, error) {
-	var r ChinesecheckersV1FriendshipJsonschemaStrict
+func UnmarshalFriendship(data []byte) (Friendship, error) {
+	var r Friendship
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
-func (r *ChinesecheckersV1FriendshipJsonschemaStrict) Marshal() ([]byte, error) {
+func (r *Friendship) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-func UnmarshalChinesecheckersV1GameJsonschemaStrict(data []byte) (ChinesecheckersV1GameJsonschemaStrict, error) {
-	var r ChinesecheckersV1GameJsonschemaStrict
+func UnmarshalGame(data []byte) (Game, error) {
+	var r Game
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
-func (r *ChinesecheckersV1GameJsonschemaStrict) Marshal() ([]byte, error) {
+func (r *Game) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-func UnmarshalChinesecheckersV1GameMemberJsonschemaStrict(data []byte) (ChinesecheckersV1GameMemberJsonschemaStrict, error) {
-	var r ChinesecheckersV1GameMemberJsonschemaStrict
+func UnmarshalGameMember(data []byte) (GameMember, error) {
+	var r GameMember
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
-func (r *ChinesecheckersV1GameMemberJsonschemaStrict) Marshal() ([]byte, error) {
+func (r *GameMember) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-func UnmarshalChinesecheckersV1GameRowJsonschemaStrict(data []byte) (ChinesecheckersV1GameRowJsonschemaStrict, error) {
-	var r ChinesecheckersV1GameRowJsonschemaStrict
+func UnmarshalGameRow(data []byte) (GameRow, error) {
+	var r GameRow
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
-func (r *ChinesecheckersV1GameRowJsonschemaStrict) Marshal() ([]byte, error) {
+func (r *GameRow) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-func UnmarshalChinesecheckersV1GameSlotJsonschemaStrict(data []byte) (ChinesecheckersV1GameSlotJsonschemaStrict, error) {
-	var r ChinesecheckersV1GameSlotJsonschemaStrict
+func UnmarshalGameSlot(data []byte) (GameSlot, error) {
+	var r GameSlot
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
-func (r *ChinesecheckersV1GameSlotJsonschemaStrict) Marshal() ([]byte, error) {
+func (r *GameSlot) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-func UnmarshalChinesecheckersV1UserJsonschemaStrict(data []byte) (ChinesecheckersV1UserJsonschemaStrict, error) {
-	var r ChinesecheckersV1UserJsonschemaStrict
+func UnmarshalTimestamp(data []byte) (Timestamp, error) {
+	var r Timestamp
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
-func (r *ChinesecheckersV1UserJsonschemaStrict) Marshal() ([]byte, error) {
+func (r *Timestamp) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-func UnmarshalGoogleProtobufTimestampJsonschemaStrict(data []byte) (GoogleProtobufTimestampJsonschemaStrict, error) {
-	var r GoogleProtobufTimestampJsonschemaStrict
+func UnmarshalUser(data []byte) (User, error) {
+	var r User
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
-func (r *GoogleProtobufTimestampJsonschemaStrict) Marshal() ([]byte, error) {
+func (r *User) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-type ChinesecheckersV1FriendshipJsonschemaStrict struct {
-	ID                   string                                                `json:"$id" dynamodbav:"$id"`
-	Schema               string                                                `json:"$schema" dynamodbav:"$schema"`
-	AdditionalProperties bool                                                  `json:"additionalProperties" dynamodbav:"additionalProperties"`
-	Properties           ChinesecheckersV1FriendshipJsonschemaStrictProperties `json:"properties" dynamodbav:"properties"`
-	Required             []string                                              `json:"required" dynamodbav:"required"`
-	Title                string                                                `json:"title" dynamodbav:"title"`
-	Type                 string                                                `json:"type" dynamodbav:"type"`
+type Friendship struct {
+	ID                   string               `json:"$id" dynamodbav:"$id"`
+	Schema               string               `json:"$schema" dynamodbav:"$schema"`
+	AdditionalProperties bool                 `json:"additionalProperties" dynamodbav:"additionalProperties"`
+	Properties           FriendshipProperties `json:"properties" dynamodbav:"properties"`
+	Required             []string             `json:"required" dynamodbav:"required"`
+	Title                string               `json:"title" dynamodbav:"title"`
+	Type                 string               `json:"type" dynamodbav:"type"`
 }
 
-type ChinesecheckersV1FriendshipJsonschemaStrictProperties struct {
+type FriendshipProperties struct {
 	AcceptedDate  AcceptedDate `json:"acceptedDate" dynamodbav:"acceptedDate"`
 	Initiator     Initiator    `json:"initiator" dynamodbav:"initiator"`
 	RequestedDate AcceptedDate `json:"requestedDate" dynamodbav:"requestedDate"`
@@ -129,17 +129,17 @@ type Status struct {
 	Type  Type     `json:"type" dynamodbav:"type"`
 }
 
-type ChinesecheckersV1GameJsonschemaStrict struct {
-	ID                   string                                          `json:"$id" dynamodbav:"$id"`
-	Schema               string                                          `json:"$schema" dynamodbav:"$schema"`
-	AdditionalProperties bool                                            `json:"additionalProperties" dynamodbav:"additionalProperties"`
-	Properties           ChinesecheckersV1GameJsonschemaStrictProperties `json:"properties" dynamodbav:"properties"`
-	Required             []string                                        `json:"required" dynamodbav:"required"`
-	Title                string                                          `json:"title" dynamodbav:"title"`
-	Type                 string                                          `json:"type" dynamodbav:"type"`
+type Game struct {
+	ID                   string         `json:"$id" dynamodbav:"$id"`
+	Schema               string         `json:"$schema" dynamodbav:"$schema"`
+	AdditionalProperties bool           `json:"additionalProperties" dynamodbav:"additionalProperties"`
+	Properties           GameProperties `json:"properties" dynamodbav:"properties"`
+	Required             []string       `json:"required" dynamodbav:"required"`
+	Title                string         `json:"title" dynamodbav:"title"`
+	Type                 string         `json:"type" dynamodbav:"type"`
 }
 
-type ChinesecheckersV1GameJsonschemaStrictProperties struct {
+type GameProperties struct {
 	Board         Board         `json:"board" dynamodbav:"board"`
 	CreatedDate   AcceptedDate  `json:"createdDate" dynamodbav:"createdDate"`
 	CurrentPlayer CurrentPlayer `json:"currentPlayer" dynamodbav:"currentPlayer"`
@@ -164,72 +164,72 @@ type Players struct {
 	Type  string    `json:"type" dynamodbav:"type"`
 }
 
-type ChinesecheckersV1GameMemberJsonschemaStrict struct {
-	ID                   string                                                `json:"$id" dynamodbav:"$id"`
-	Schema               string                                                `json:"$schema" dynamodbav:"$schema"`
-	AdditionalProperties bool                                                  `json:"additionalProperties" dynamodbav:"additionalProperties"`
-	Properties           ChinesecheckersV1GameMemberJsonschemaStrictProperties `json:"properties" dynamodbav:"properties"`
-	Required             []string                                              `json:"required" dynamodbav:"required"`
-	Title                string                                                `json:"title" dynamodbav:"title"`
-	Type                 string                                                `json:"type" dynamodbav:"type"`
+type GameMember struct {
+	ID                   string               `json:"$id" dynamodbav:"$id"`
+	Schema               string               `json:"$schema" dynamodbav:"$schema"`
+	AdditionalProperties bool                 `json:"additionalProperties" dynamodbav:"additionalProperties"`
+	Properties           GameMemberProperties `json:"properties" dynamodbav:"properties"`
+	Required             []string             `json:"required" dynamodbav:"required"`
+	Title                string               `json:"title" dynamodbav:"title"`
+	Type                 string               `json:"type" dynamodbav:"type"`
 }
 
-type ChinesecheckersV1GameMemberJsonschemaStrictProperties struct {
+type GameMemberProperties struct {
 	GameID Initiator `json:"gameId" dynamodbav:"gameId"`
 	UserID Initiator `json:"userId" dynamodbav:"userId"`
 }
 
-type ChinesecheckersV1GameRowJsonschemaStrict struct {
-	ID                   string                                             `json:"$id" dynamodbav:"$id"`
-	Schema               string                                             `json:"$schema" dynamodbav:"$schema"`
-	AdditionalProperties bool                                               `json:"additionalProperties" dynamodbav:"additionalProperties"`
-	Properties           ChinesecheckersV1GameRowJsonschemaStrictProperties `json:"properties" dynamodbav:"properties"`
-	Required             []string                                           `json:"required" dynamodbav:"required"`
-	Title                string                                             `json:"title" dynamodbav:"title"`
-	Type                 string                                             `json:"type" dynamodbav:"type"`
+type GameRow struct {
+	ID                   string            `json:"$id" dynamodbav:"$id"`
+	Schema               string            `json:"$schema" dynamodbav:"$schema"`
+	AdditionalProperties bool              `json:"additionalProperties" dynamodbav:"additionalProperties"`
+	Properties           GameRowProperties `json:"properties" dynamodbav:"properties"`
+	Required             []string          `json:"required" dynamodbav:"required"`
+	Title                string            `json:"title" dynamodbav:"title"`
+	Type                 string            `json:"type" dynamodbav:"type"`
 }
 
-type ChinesecheckersV1GameRowJsonschemaStrictProperties struct {
+type GameRowProperties struct {
 	Slots Board `json:"slots" dynamodbav:"slots"`
 }
 
-type ChinesecheckersV1GameSlotJsonschemaStrict struct {
-	ID                   string                                              `json:"$id" dynamodbav:"$id"`
-	Schema               string                                              `json:"$schema" dynamodbav:"$schema"`
-	AdditionalProperties bool                                                `json:"additionalProperties" dynamodbav:"additionalProperties"`
-	Properties           ChinesecheckersV1GameSlotJsonschemaStrictProperties `json:"properties" dynamodbav:"properties"`
-	Title                string                                              `json:"title" dynamodbav:"title"`
-	Type                 string                                              `json:"type" dynamodbav:"type"`
+type GameSlot struct {
+	ID                   string             `json:"$id" dynamodbav:"$id"`
+	Schema               string             `json:"$schema" dynamodbav:"$schema"`
+	AdditionalProperties bool               `json:"additionalProperties" dynamodbav:"additionalProperties"`
+	Properties           GameSlotProperties `json:"properties" dynamodbav:"properties"`
+	Title                string             `json:"title" dynamodbav:"title"`
+	Type                 string             `json:"type" dynamodbav:"type"`
 }
 
-type ChinesecheckersV1GameSlotJsonschemaStrictProperties struct {
+type GameSlotProperties struct {
 	User Initiator `json:"user" dynamodbav:"user"`
 }
 
-type ChinesecheckersV1UserJsonschemaStrict struct {
-	ID                   string                                          `json:"$id" dynamodbav:"$id"`
-	Schema               string                                          `json:"$schema" dynamodbav:"$schema"`
-	AdditionalProperties bool                                            `json:"additionalProperties" dynamodbav:"additionalProperties"`
-	Properties           ChinesecheckersV1UserJsonschemaStrictProperties `json:"properties" dynamodbav:"properties"`
-	Required             []string                                        `json:"required" dynamodbav:"required"`
-	Title                string                                          `json:"title" dynamodbav:"title"`
-	Type                 string                                          `json:"type" dynamodbav:"type"`
-}
-
-type ChinesecheckersV1UserJsonschemaStrictProperties struct {
-	CreatedDate AcceptedDate `json:"createdDate" dynamodbav:"createdDate"`
-	Email       Initiator    `json:"email" dynamodbav:"email"`
-	ID          Initiator    `json:"id" dynamodbav:"id"`
-	Name        Initiator    `json:"name" dynamodbav:"name"`
-	UpdatedDate AcceptedDate `json:"updatedDate" dynamodbav:"updatedDate"`
-}
-
-type GoogleProtobufTimestampJsonschemaStrict struct {
+type Timestamp struct {
 	ID     string `json:"$id" dynamodbav:"$id"`
 	Schema string `json:"$schema" dynamodbav:"$schema"`
 	Format string `json:"format" dynamodbav:"format"`
 	Title  string `json:"title" dynamodbav:"title"`
 	Type   Type   `json:"type" dynamodbav:"type"`
+}
+
+type User struct {
+	ID                   string         `json:"$id" dynamodbav:"$id"`
+	Schema               string         `json:"$schema" dynamodbav:"$schema"`
+	AdditionalProperties bool           `json:"additionalProperties" dynamodbav:"additionalProperties"`
+	Properties           UserProperties `json:"properties" dynamodbav:"properties"`
+	Required             []string       `json:"required" dynamodbav:"required"`
+	Title                string         `json:"title" dynamodbav:"title"`
+	Type                 string         `json:"type" dynamodbav:"type"`
+}
+
+type UserProperties struct {
+	CreatedDate AcceptedDate `json:"createdDate" dynamodbav:"createdDate"`
+	Email       Initiator    `json:"email" dynamodbav:"email"`
+	ID          Initiator    `json:"id" dynamodbav:"id"`
+	Name        Initiator    `json:"name" dynamodbav:"name"`
+	UpdatedDate AcceptedDate `json:"updatedDate" dynamodbav:"updatedDate"`
 }
 
 type Type string

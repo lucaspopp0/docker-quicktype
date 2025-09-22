@@ -1,29 +1,29 @@
 // To parse this data:
 //
-//   import { Convert, ChinesecheckersV1FriendshipJsonschemaStrict, ChinesecheckersV1GameJsonschemaStrict, ChinesecheckersV1GameMemberJsonschemaStrict, ChinesecheckersV1GameRowJsonschemaStrict, ChinesecheckersV1GameSlotJsonschemaStrict, ChinesecheckersV1UserJsonschemaStrict, GoogleProtobufTimestampJsonschemaStrict } from "./file";
+//   import { Convert, Friendship, Game, GameMember, GameRow, GameSlot, Timestamp, User } from "./file";
 //
-//   const chinesecheckersV1FriendshipJsonschemaStrict = Convert.toChinesecheckersV1FriendshipJsonschemaStrict(json);
-//   const chinesecheckersV1GameJsonschemaStrict = Convert.toChinesecheckersV1GameJsonschemaStrict(json);
-//   const chinesecheckersV1GameMemberJsonschemaStrict = Convert.toChinesecheckersV1GameMemberJsonschemaStrict(json);
-//   const chinesecheckersV1GameRowJsonschemaStrict = Convert.toChinesecheckersV1GameRowJsonschemaStrict(json);
-//   const chinesecheckersV1GameSlotJsonschemaStrict = Convert.toChinesecheckersV1GameSlotJsonschemaStrict(json);
-//   const chinesecheckersV1UserJsonschemaStrict = Convert.toChinesecheckersV1UserJsonschemaStrict(json);
-//   const googleProtobufTimestampJsonschemaStrict = Convert.toGoogleProtobufTimestampJsonschemaStrict(json);
+//   const friendship = Convert.toFriendship(json);
+//   const game = Convert.toGame(json);
+//   const gameMember = Convert.toGameMember(json);
+//   const gameRow = Convert.toGameRow(json);
+//   const gameSlot = Convert.toGameSlot(json);
+//   const timestamp = Convert.toTimestamp(json);
+//   const user = Convert.toUser(json);
 //
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
 
-export interface ChinesecheckersV1FriendshipJsonschemaStrict {
+export interface Friendship {
     $id:                  string;
     $schema:              string;
     additionalProperties: boolean;
-    properties:           ChinesecheckersV1FriendshipJsonschemaStrictProperties;
+    properties:           FriendshipProperties;
     required:             string[];
     title:                string;
     type:                 string;
 }
 
-export interface ChinesecheckersV1FriendshipJsonschemaStrictProperties {
+export interface FriendshipProperties {
     acceptedDate:  AcceptedDate;
     initiator:     Initiator;
     requestedDate: AcceptedDate;
@@ -50,17 +50,17 @@ export interface Status {
     type:  Type;
 }
 
-export interface ChinesecheckersV1GameJsonschemaStrict {
+export interface Game {
     $id:                  string;
     $schema:              string;
     additionalProperties: boolean;
-    properties:           ChinesecheckersV1GameJsonschemaStrictProperties;
+    properties:           GameProperties;
     required:             string[];
     title:                string;
     type:                 string;
 }
 
-export interface ChinesecheckersV1GameJsonschemaStrictProperties {
+export interface GameProperties {
     board:         Board;
     createdDate:   AcceptedDate;
     currentPlayer: CurrentPlayer;
@@ -85,67 +85,49 @@ export interface Players {
     type:  string;
 }
 
-export interface ChinesecheckersV1GameMemberJsonschemaStrict {
+export interface GameMember {
     $id:                  string;
     $schema:              string;
     additionalProperties: boolean;
-    properties:           ChinesecheckersV1GameMemberJsonschemaStrictProperties;
+    properties:           GameMemberProperties;
     required:             string[];
     title:                string;
     type:                 string;
 }
 
-export interface ChinesecheckersV1GameMemberJsonschemaStrictProperties {
+export interface GameMemberProperties {
     gameId: Initiator;
     userId: Initiator;
 }
 
-export interface ChinesecheckersV1GameRowJsonschemaStrict {
+export interface GameRow {
     $id:                  string;
     $schema:              string;
     additionalProperties: boolean;
-    properties:           ChinesecheckersV1GameRowJsonschemaStrictProperties;
+    properties:           GameRowProperties;
     required:             string[];
     title:                string;
     type:                 string;
 }
 
-export interface ChinesecheckersV1GameRowJsonschemaStrictProperties {
+export interface GameRowProperties {
     slots: Board;
 }
 
-export interface ChinesecheckersV1GameSlotJsonschemaStrict {
+export interface GameSlot {
     $id:                  string;
     $schema:              string;
     additionalProperties: boolean;
-    properties:           ChinesecheckersV1GameSlotJsonschemaStrictProperties;
+    properties:           GameSlotProperties;
     title:                string;
     type:                 string;
 }
 
-export interface ChinesecheckersV1GameSlotJsonschemaStrictProperties {
+export interface GameSlotProperties {
     user: Initiator;
 }
 
-export interface ChinesecheckersV1UserJsonschemaStrict {
-    $id:                  string;
-    $schema:              string;
-    additionalProperties: boolean;
-    properties:           ChinesecheckersV1UserJsonschemaStrictProperties;
-    required:             string[];
-    title:                string;
-    type:                 string;
-}
-
-export interface ChinesecheckersV1UserJsonschemaStrictProperties {
-    createdDate: AcceptedDate;
-    email:       Initiator;
-    id:          Initiator;
-    name:        Initiator;
-    updatedDate: AcceptedDate;
-}
-
-export interface GoogleProtobufTimestampJsonschemaStrict {
+export interface Timestamp {
     $id:     string;
     $schema: string;
     format:  string;
@@ -153,63 +135,81 @@ export interface GoogleProtobufTimestampJsonschemaStrict {
     type:    Type;
 }
 
+export interface User {
+    $id:                  string;
+    $schema:              string;
+    additionalProperties: boolean;
+    properties:           UserProperties;
+    required:             string[];
+    title:                string;
+    type:                 string;
+}
+
+export interface UserProperties {
+    createdDate: AcceptedDate;
+    email:       Initiator;
+    id:          Initiator;
+    name:        Initiator;
+    updatedDate: AcceptedDate;
+}
+
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
-    public static toChinesecheckersV1FriendshipJsonschemaStrict(json: string): ChinesecheckersV1FriendshipJsonschemaStrict {
-        return cast(JSON.parse(json), r("ChinesecheckersV1FriendshipJsonschemaStrict"));
+    public static toFriendship(json: string): Friendship {
+        return cast(JSON.parse(json), r("Friendship"));
     }
 
-    public static chinesecheckersV1FriendshipJsonschemaStrictToJson(value: ChinesecheckersV1FriendshipJsonschemaStrict): string {
-        return JSON.stringify(uncast(value, r("ChinesecheckersV1FriendshipJsonschemaStrict")), null, 2);
+    public static friendshipToJson(value: Friendship): string {
+        return JSON.stringify(uncast(value, r("Friendship")), null, 2);
     }
 
-    public static toChinesecheckersV1GameJsonschemaStrict(json: string): ChinesecheckersV1GameJsonschemaStrict {
-        return cast(JSON.parse(json), r("ChinesecheckersV1GameJsonschemaStrict"));
+    public static toGame(json: string): Game {
+        return cast(JSON.parse(json), r("Game"));
     }
 
-    public static chinesecheckersV1GameJsonschemaStrictToJson(value: ChinesecheckersV1GameJsonschemaStrict): string {
-        return JSON.stringify(uncast(value, r("ChinesecheckersV1GameJsonschemaStrict")), null, 2);
+    public static gameToJson(value: Game): string {
+        return JSON.stringify(uncast(value, r("Game")), null, 2);
     }
 
-    public static toChinesecheckersV1GameMemberJsonschemaStrict(json: string): ChinesecheckersV1GameMemberJsonschemaStrict {
-        return cast(JSON.parse(json), r("ChinesecheckersV1GameMemberJsonschemaStrict"));
+    public static toGameMember(json: string): GameMember {
+        return cast(JSON.parse(json), r("GameMember"));
     }
 
-    public static chinesecheckersV1GameMemberJsonschemaStrictToJson(value: ChinesecheckersV1GameMemberJsonschemaStrict): string {
-        return JSON.stringify(uncast(value, r("ChinesecheckersV1GameMemberJsonschemaStrict")), null, 2);
+    public static gameMemberToJson(value: GameMember): string {
+        return JSON.stringify(uncast(value, r("GameMember")), null, 2);
     }
 
-    public static toChinesecheckersV1GameRowJsonschemaStrict(json: string): ChinesecheckersV1GameRowJsonschemaStrict {
-        return cast(JSON.parse(json), r("ChinesecheckersV1GameRowJsonschemaStrict"));
+    public static toGameRow(json: string): GameRow {
+        return cast(JSON.parse(json), r("GameRow"));
     }
 
-    public static chinesecheckersV1GameRowJsonschemaStrictToJson(value: ChinesecheckersV1GameRowJsonschemaStrict): string {
-        return JSON.stringify(uncast(value, r("ChinesecheckersV1GameRowJsonschemaStrict")), null, 2);
+    public static gameRowToJson(value: GameRow): string {
+        return JSON.stringify(uncast(value, r("GameRow")), null, 2);
     }
 
-    public static toChinesecheckersV1GameSlotJsonschemaStrict(json: string): ChinesecheckersV1GameSlotJsonschemaStrict {
-        return cast(JSON.parse(json), r("ChinesecheckersV1GameSlotJsonschemaStrict"));
+    public static toGameSlot(json: string): GameSlot {
+        return cast(JSON.parse(json), r("GameSlot"));
     }
 
-    public static chinesecheckersV1GameSlotJsonschemaStrictToJson(value: ChinesecheckersV1GameSlotJsonschemaStrict): string {
-        return JSON.stringify(uncast(value, r("ChinesecheckersV1GameSlotJsonschemaStrict")), null, 2);
+    public static gameSlotToJson(value: GameSlot): string {
+        return JSON.stringify(uncast(value, r("GameSlot")), null, 2);
     }
 
-    public static toChinesecheckersV1UserJsonschemaStrict(json: string): ChinesecheckersV1UserJsonschemaStrict {
-        return cast(JSON.parse(json), r("ChinesecheckersV1UserJsonschemaStrict"));
+    public static toTimestamp(json: string): Timestamp {
+        return cast(JSON.parse(json), r("Timestamp"));
     }
 
-    public static chinesecheckersV1UserJsonschemaStrictToJson(value: ChinesecheckersV1UserJsonschemaStrict): string {
-        return JSON.stringify(uncast(value, r("ChinesecheckersV1UserJsonschemaStrict")), null, 2);
+    public static timestampToJson(value: Timestamp): string {
+        return JSON.stringify(uncast(value, r("Timestamp")), null, 2);
     }
 
-    public static toGoogleProtobufTimestampJsonschemaStrict(json: string): GoogleProtobufTimestampJsonschemaStrict {
-        return cast(JSON.parse(json), r("GoogleProtobufTimestampJsonschemaStrict"));
+    public static toUser(json: string): User {
+        return cast(JSON.parse(json), r("User"));
     }
 
-    public static googleProtobufTimestampJsonschemaStrictToJson(value: GoogleProtobufTimestampJsonschemaStrict): string {
-        return JSON.stringify(uncast(value, r("GoogleProtobufTimestampJsonschemaStrict")), null, 2);
+    public static userToJson(value: User): string {
+        return JSON.stringify(uncast(value, r("User")), null, 2);
     }
 }
 
@@ -366,16 +366,16 @@ function r(name: string) {
 }
 
 const typeMap: any = {
-    "ChinesecheckersV1FriendshipJsonschemaStrict": o([
+    "Friendship": o([
         { json: "$id", js: "$id", typ: "" },
         { json: "$schema", js: "$schema", typ: "" },
         { json: "additionalProperties", js: "additionalProperties", typ: true },
-        { json: "properties", js: "properties", typ: r("ChinesecheckersV1FriendshipJsonschemaStrictProperties") },
+        { json: "properties", js: "properties", typ: r("FriendshipProperties") },
         { json: "required", js: "required", typ: a("") },
         { json: "title", js: "title", typ: "" },
         { json: "type", js: "type", typ: "" },
     ], false),
-    "ChinesecheckersV1FriendshipJsonschemaStrictProperties": o([
+    "FriendshipProperties": o([
         { json: "acceptedDate", js: "acceptedDate", typ: r("AcceptedDate") },
         { json: "initiator", js: "initiator", typ: r("Initiator") },
         { json: "requestedDate", js: "requestedDate", typ: r("AcceptedDate") },
@@ -394,16 +394,16 @@ const typeMap: any = {
         { json: "title", js: "title", typ: "" },
         { json: "type", js: "type", typ: r("Type") },
     ], false),
-    "ChinesecheckersV1GameJsonschemaStrict": o([
+    "Game": o([
         { json: "$id", js: "$id", typ: "" },
         { json: "$schema", js: "$schema", typ: "" },
         { json: "additionalProperties", js: "additionalProperties", typ: true },
-        { json: "properties", js: "properties", typ: r("ChinesecheckersV1GameJsonschemaStrictProperties") },
+        { json: "properties", js: "properties", typ: r("GameProperties") },
         { json: "required", js: "required", typ: a("") },
         { json: "title", js: "title", typ: "" },
         { json: "type", js: "type", typ: "" },
     ], false),
-    "ChinesecheckersV1GameJsonschemaStrictProperties": o([
+    "GameProperties": o([
         { json: "board", js: "board", typ: r("Board") },
         { json: "createdDate", js: "createdDate", typ: r("AcceptedDate") },
         { json: "currentPlayer", js: "currentPlayer", typ: r("CurrentPlayer") },
@@ -424,64 +424,64 @@ const typeMap: any = {
         { json: "items", js: "items", typ: r("Initiator") },
         { json: "type", js: "type", typ: "" },
     ], false),
-    "ChinesecheckersV1GameMemberJsonschemaStrict": o([
+    "GameMember": o([
         { json: "$id", js: "$id", typ: "" },
         { json: "$schema", js: "$schema", typ: "" },
         { json: "additionalProperties", js: "additionalProperties", typ: true },
-        { json: "properties", js: "properties", typ: r("ChinesecheckersV1GameMemberJsonschemaStrictProperties") },
+        { json: "properties", js: "properties", typ: r("GameMemberProperties") },
         { json: "required", js: "required", typ: a("") },
         { json: "title", js: "title", typ: "" },
         { json: "type", js: "type", typ: "" },
     ], false),
-    "ChinesecheckersV1GameMemberJsonschemaStrictProperties": o([
+    "GameMemberProperties": o([
         { json: "gameId", js: "gameId", typ: r("Initiator") },
         { json: "userId", js: "userId", typ: r("Initiator") },
     ], false),
-    "ChinesecheckersV1GameRowJsonschemaStrict": o([
+    "GameRow": o([
         { json: "$id", js: "$id", typ: "" },
         { json: "$schema", js: "$schema", typ: "" },
         { json: "additionalProperties", js: "additionalProperties", typ: true },
-        { json: "properties", js: "properties", typ: r("ChinesecheckersV1GameRowJsonschemaStrictProperties") },
+        { json: "properties", js: "properties", typ: r("GameRowProperties") },
         { json: "required", js: "required", typ: a("") },
         { json: "title", js: "title", typ: "" },
         { json: "type", js: "type", typ: "" },
     ], false),
-    "ChinesecheckersV1GameRowJsonschemaStrictProperties": o([
+    "GameRowProperties": o([
         { json: "slots", js: "slots", typ: r("Board") },
     ], false),
-    "ChinesecheckersV1GameSlotJsonschemaStrict": o([
+    "GameSlot": o([
         { json: "$id", js: "$id", typ: "" },
         { json: "$schema", js: "$schema", typ: "" },
         { json: "additionalProperties", js: "additionalProperties", typ: true },
-        { json: "properties", js: "properties", typ: r("ChinesecheckersV1GameSlotJsonschemaStrictProperties") },
+        { json: "properties", js: "properties", typ: r("GameSlotProperties") },
         { json: "title", js: "title", typ: "" },
         { json: "type", js: "type", typ: "" },
     ], false),
-    "ChinesecheckersV1GameSlotJsonschemaStrictProperties": o([
+    "GameSlotProperties": o([
         { json: "user", js: "user", typ: r("Initiator") },
     ], false),
-    "ChinesecheckersV1UserJsonschemaStrict": o([
-        { json: "$id", js: "$id", typ: "" },
-        { json: "$schema", js: "$schema", typ: "" },
-        { json: "additionalProperties", js: "additionalProperties", typ: true },
-        { json: "properties", js: "properties", typ: r("ChinesecheckersV1UserJsonschemaStrictProperties") },
-        { json: "required", js: "required", typ: a("") },
-        { json: "title", js: "title", typ: "" },
-        { json: "type", js: "type", typ: "" },
-    ], false),
-    "ChinesecheckersV1UserJsonschemaStrictProperties": o([
-        { json: "createdDate", js: "createdDate", typ: r("AcceptedDate") },
-        { json: "email", js: "email", typ: r("Initiator") },
-        { json: "id", js: "id", typ: r("Initiator") },
-        { json: "name", js: "name", typ: r("Initiator") },
-        { json: "updatedDate", js: "updatedDate", typ: r("AcceptedDate") },
-    ], false),
-    "GoogleProtobufTimestampJsonschemaStrict": o([
+    "Timestamp": o([
         { json: "$id", js: "$id", typ: "" },
         { json: "$schema", js: "$schema", typ: "" },
         { json: "format", js: "format", typ: "" },
         { json: "title", js: "title", typ: "" },
         { json: "type", js: "type", typ: r("Type") },
+    ], false),
+    "User": o([
+        { json: "$id", js: "$id", typ: "" },
+        { json: "$schema", js: "$schema", typ: "" },
+        { json: "additionalProperties", js: "additionalProperties", typ: true },
+        { json: "properties", js: "properties", typ: r("UserProperties") },
+        { json: "required", js: "required", typ: a("") },
+        { json: "title", js: "title", typ: "" },
+        { json: "type", js: "type", typ: "" },
+    ], false),
+    "UserProperties": o([
+        { json: "createdDate", js: "createdDate", typ: r("AcceptedDate") },
+        { json: "email", js: "email", typ: r("Initiator") },
+        { json: "id", js: "id", typ: r("Initiator") },
+        { json: "name", js: "name", typ: r("Initiator") },
+        { json: "updatedDate", js: "updatedDate", typ: r("AcceptedDate") },
     ], false),
     "Type": [
         "string",
