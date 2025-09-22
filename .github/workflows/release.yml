@@ -1,5 +1,7 @@
 name: release
 
+run-name: Release ${{ github.ref_name }}
+
 on:
   push:
     tags:
@@ -21,16 +23,15 @@ defaults:
 
 jobs:
 
-  build-and-push:
+  docker-push:
     permissions: write-all
     uses: ./.github/workflows/docker-build.yml
     with:
       PUSH: true
-      CHECKOUT_REF: refs/tags/${{ github.ref_name }}
     secrets: inherit
 
   release:
-    needs: [build-and-push]
+    needs: [docker-push]
     permissions:
       contents: read
       id-token: write
