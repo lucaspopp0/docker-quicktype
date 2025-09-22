@@ -149,7 +149,7 @@ jobs:
         env:
           META_TAGS: ${{ steps.meta.outputs.tags }}
         run: |
-          LATEST_IMAGE=$(echo "$META_TAGS" | head -n 1)
+          LATEST_IMAGE=$(echo "$META_TAGS" | tail -n 1)
           echo "Latest image: $LATEST_IMAGE"
 
           rm -rf outputs/*
