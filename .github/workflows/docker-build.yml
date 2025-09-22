@@ -124,20 +124,18 @@ jobs:
         id: image-tag
         env:
           INPUT_PUSH: ${{ inputs.PUSH }}
-          IS_TAG: ${{ github.ref_type == 'tag' }}
-          IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/quicktype
+          REF_IS_TAG: ${{ github.ref_type == 'tag' }}
+          IMAGE_NAME: local-quicktype
+          IMAGE_TAG: latest
         run: |
-          IMAGE_TAG=""
           if [[ "$INPUTS_PUSH" == "true" ]]; then
-            if [[ "$IS_TAG" == "true" ]]; then
-              IMAGE_TAG="$GITHUB_REF_NAME"
-            else
+            IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/quicktype"
+            IMAGE_TAG="$GITHUB_REF_NAME"
+            
+            if [[ "$REF_IS_TAG" != "true" ]]; then
               >&2 echo "Can only push from tags"
               exit 1
             fi
-          else
-            IMAGE_NAME="local-quicktype"
-            IMAGE_TAG="latest"
           fi
 
           echo "tag=$IMAGE_TAG" | tee -a "$GITHUB_OUTPUT"
