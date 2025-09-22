@@ -161,16 +161,9 @@ jobs:
         name: Generate example
         working-directory: example
         run: |
-          docker run --rm \
+          docker run \
             -v "$(pwd):/example" \
-            "${{ steps.image-tag.outputs.slug }}" \
-              "/example/inputs/jsonschema/*" \
-              -o "/example/outputs/swift/Models.swift" \
-              --src-lang schema \
-              --lang swift \
-              --swift-5-support \
-              --access-level public \
-              --no-coding-keys
+            "${{ steps.image-tag.outputs.slug }}"
       -
         name: Check for example changes
         id: example-changes
