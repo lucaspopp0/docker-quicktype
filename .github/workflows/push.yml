@@ -11,7 +11,6 @@ permissions:
   contents: write
   pull-requests: write
   id-token: write
-  packages: write
 
 defaults:
   run:
@@ -27,7 +26,7 @@ jobs:
       id-token: write
     secrets: inherit
 
-  tag-and-release:
+  tag:
     needs: detect-changes
     if: |
       needs.detect-changes.outputs.source-changed == 'true' ||
@@ -107,33 +106,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git tag "$TAG" -m "$TAG"
           git push origin "$TAG"
-      -
-        name: Generate release
-        if: ${{ steps.is-taggable.outputs.taggable == 'true' }}
-        env:
-          GH_TOKEN: ${{ steps.bot-token.outputs.token }}
-          TITLE: ${{ steps.generate-version.outputs.version }}
-          TAG: ${{ steps.generate-version.outputs.version_tag }}
-        run: |
-          # if the release already exists, exit early
-          if gh release view "${TAG}" > /dev/null; then
-            echo "Skipping release. Release already exists."
-            echo "${{ github.server_url }}/${{ github.repository }}/releases/tag/${TAG}"
-            exit 0
-          fi
-
-          gh release create "${TAG}" \
-            --verify-tag \
-            --title "${TITLE}" \
-            --generate-notes
-
-  build-and-push:
-    permissions: write-all
-    needs: 
-      - detect-changes
-      - tag-and-release
-    uses: ./.github/workflows/docker-build.yml
-    with:
-      PUSH: true
-      CHECKOUT_REF: refs/tags/${{ needs.tag-and-release.outputs.version-tag }}
-    secrets: inherit
+    

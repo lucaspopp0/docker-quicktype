@@ -1,0 +1,66 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+  workflow_dispatch:
+    inputs:
+      PUSH:
+        description: Push the image?
+        type: boolean
+        default: true
+
+
+permissions: write-all
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+
+  build-and-push:
+    permissions: write-all
+    uses: ./.github/workflows/docker-build.yml
+    with:
+      PUSH: true
+      CHECKOUT_REF: refs/tags/${{ github.ref_name }}
+    secrets: inherit
+
+  release:
+    needs: [build-and-push]
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    steps: 
+      - 
+        name: Generate bot token
+        id: bot-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.BOT_APP_ID }}
+          private_key: ${{ secrets.BOT_PRIVATE_KEY }}
+      -
+        uses: actions/checkout@v5
+        with:
+          token: ${{ steps.bot-token.outputs.token }}
+      -
+        name: Generate release
+        env:
+          GH_TOKEN: ${{ steps.bot-token.outputs.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          # if the release already exists, exit early
+          if gh release view "${TAG}" > /dev/null; then
+            echo "Skipping release. Release already exists."
+            echo "${{ github.server_url }}/${{ github.repository }}/releases/tag/${TAG}"
+            exit 0
+          fi
+
+          gh release create "${TAG}" \
+            --verify-tag \
+            --title "${TAG}" \
+            --generate-notes
