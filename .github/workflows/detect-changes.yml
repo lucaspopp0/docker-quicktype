@@ -33,7 +33,9 @@ jobs:
         with:
           filters: |
             source:
-              - 'docker-quicktype/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'Dockerfile'
             ci:
               - '.github/**'
               - '.gitignore'

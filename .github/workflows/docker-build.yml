@@ -41,7 +41,6 @@ jobs:
         id: check-versions
         if: github.event_name == 'pull_request'
         name: Check node versions
-        working-directory: docker-quicktype
         run: |
           CURRENT_NODE_VERSION="$(cat .nvmrc)"
           echo "current-node-version=$CURRENT_NODE_VERSION" | tee -a "$GITHUB_OUTPUT"
@@ -50,7 +49,7 @@ jobs:
           DOCKER_NODE_VERSION=v$(cat Dockerfile \
               | grep 'FROM node:' \
               | head -n 1 \
-              | sed -E 's/FROM node:([^ ]+).*/\1/')
+              | sed -E 's/FROM node:([^ -]+).*/\1/')
 
           echo "docker-node-version=$DOCKER_NODE_VERSION" | tee -a "$GITHUB_OUTPUT"
 
@@ -67,11 +66,10 @@ jobs:
         with:
           node-version: ${{ steps.check-versions.outputs.docker-node-version }}
           cache: npm
-          cache-dependency-path: docker-quicktype/package-lock.json
+          cache-dependency-path: package-lock.json
       -
         name: Update project Node version
         if: steps.check-versions.outputs.needs-update == 'true'
-        working-directory: docker-quicktype
         env:
           TARGET_VERSION: ${{ steps.check-versions.outputs.docker-node-version }}
         run: |
@@ -90,7 +88,7 @@ jobs:
           fi
       -
         name: Commit node version changes if detected
-        if: ${{ steps.node-version-changes.outputs.detected == 'true' }}
+        if: steps.node-version-changes.outputs.detected == 'true'
         uses: planetscale/ghcommit-action@v0.2.17
         env:
           GITHUB_TOKEN: ${{ steps.bot-token.outputs.token }}
@@ -106,24 +104,27 @@ jobs:
         uses: docker/setup-buildx-action@v3
       -
         uses: docker/login-action@v3
+        if: inputs.PUSH
         with:
           registry: ghcr.io
           username: github-actions[bot]
           password: ${{ secrets.GITHUB_TOKEN }}
       -
         name: Extract metadata
+        if: inputs.PUSH
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ inputs.PUSH && format('ghcr.io/{0}/quicktype', github.repository_owner) || 'local-quicktype' }}
+          images: ghcr.io/${{ github.repository_owner }}/quicktype
           tags: |
             type=semver,pattern={{version}}
             type=ref,event=pr
       -
         uses: docker/build-push-action@v6
+        if: inputs.PUSH
         id: docker-build
         with:
-          context: ./docker-quicktype
+          context: .
           push: ${{ inputs.PUSH }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -146,14 +147,13 @@ jobs:
             --title "${TAG}" \
             --generate-notes
       -
-        name: Generate example
-        working-directory: example
-        env:
-          META_TAGS: ${{ steps.meta.outputs.tags }}
+        name: Generate examples
+        if: inputs.PUSH != true
         run: |
-          LATEST_IMAGE=$(echo "$META_TAGS" | head -n 1)
-          echo "Latest image: $LATEST_IMAGE"
+          IMAGE="local-quicktype:latest"
+          docker build . -t "$IMAGE"
 
+          cd example
           rm -rf outputs/*
           touch outputs/.gitkeep
           mkdir -p outputs/typescript
@@ -162,7 +162,7 @@ jobs:
           echo "Generating TypeScript schemas"
           docker run \
             -v "$(pwd):/example" \
-            "${LATEST_IMAGE}" \
+            "${IMAGE}" \
               --src-lang schema \
               --src "/example/inputs/jsonschema" \
               --lang typescript \
@@ -172,7 +172,7 @@ jobs:
           echo "Generating Go schemas"
           docker run \
             -v "$(pwd):/example" \
-            "${LATEST_IMAGE}" \
+            "${IMAGE}" \
               --src-lang schema \
               --src "/example/inputs/jsonschema" \
               --lang go \
@@ -200,7 +200,7 @@ jobs:
           fi
       -
         name: Commit example changes if detected
-        if: ${{ steps.example-changes.outputs.detected == 'true' }}
+        if: steps.example-changes.outputs.detected == 'true'
         uses: planetscale/ghcommit-action@v0.2.17
         env:
           GITHUB_TOKEN: ${{ steps.bot-token.outputs.token }}
