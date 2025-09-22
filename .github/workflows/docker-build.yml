@@ -115,46 +115,27 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository_owner }}/quicktype
+          images: ${{ inputs.PUSH && format('ghcr.io/{1}/quicktype', github.repository_owner) || 'local-quicktype' }}
           tags: |
             type=semver,pattern={{version}}
             type=ref,event=pr
-      -
-        name: Determine image tag
-        id: image-tag
-        env:
-          INPUT_PUSH: ${{ inputs.PUSH }}
-          REF_IS_TAG: ${{ github.ref_type == 'tag' }}
-          IMAGE_NAME: local-quicktype
-          IMAGE_TAG: latest
-        run: |
-          IMAGE_NAME="$IMAGE_NAME"
-          IMAGE_TAG="$IMAGE_TAG"
-
-          if [[ "$INPUT_PUSH" == "true" ]]; then
-            IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/quicktype"
-            IMAGE_TAG="$GITHUB_REF_NAME"
-            
-            if [[ "$REF_IS_TAG" != "true" ]]; then
-              >&2 echo "Can only push from tags"
-              exit 1
-            fi
-          fi
-
-          echo "tag=$IMAGE_TAG" | tee -a "$GITHUB_OUTPUT"
-          echo "slug=$IMAGE_NAME:$IMAGE_TAG" | tee -a "$GITHUB_OUTPUT"
       -
         uses: docker/build-push-action@v6
         id: docker-build
         with:
           context: ./docker-quicktype
           push: ${{ inputs.PUSH }}
-          tags: ${{ steps.image-tag.outputs.slug }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       -
         name: Generate example
         working-directory: example
+        env:
+          META_TAGS: ${{ steps.meta.outputs.tags }}
         run: |
+          LATEST_IMAGE=$(echo "$META_TAGS" | head -n 1)
+          echo "Latest image: $LATEST_IMAGE"
+
           rm -rf outputs/*
           touch outputs/.gitkeep
           mkdir -p outputs/typescript
@@ -163,7 +144,7 @@ jobs:
           echo "Generating TypeScript schemas"
           docker run \
             -v "$(pwd):/example" \
-            "${{ steps.image-tag.outputs.slug }}" \
+            "${LATEST_IMAGE}" \
               --src-lang schema \
               --src "/example/inputs/jsonschema" \
               --lang typescript \
@@ -173,7 +154,7 @@ jobs:
           echo "Generating Go schemas"
           docker run \
             -v "$(pwd):/example" \
-            "${{ steps.image-tag.outputs.slug }}" \
+            "${LATEST_IMAGE}" \
               --src-lang schema \
               --src "/example/inputs/jsonschema" \
               --lang go \
