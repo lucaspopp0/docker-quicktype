@@ -88,7 +88,7 @@ jobs:
           fi
       -
         name: Commit node version changes if detected
-        if: ${{ steps.node-version-changes.outputs.detected == 'true' }}
+        if: steps.node-version-changes.outputs.detected == 'true'
         uses: planetscale/ghcommit-action@v0.2.17
         env:
           GITHUB_TOKEN: ${{ steps.bot-token.outputs.token }}
@@ -111,17 +111,17 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       -
         name: Extract metadata
+        if: inputs.PUSH
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ inputs.PUSH && format('ghcr.io/{0}/quicktype', github.repository_owner) || 'local-quicktype' }}
-          flavor: |
-            latest=${{ inputs.PUSH && 'auto' || 'true' }}
+          images: ghcr.io/${{ github.repository_owner }}/quicktype
           tags: |
             type=semver,pattern={{version}}
             type=ref,event=pr
       -
         uses: docker/build-push-action@v6
+        if: inputs.PUSH
         id: docker-build
         with:
           context: .
@@ -147,13 +147,11 @@ jobs:
             --title "${TAG}" \
             --generate-notes
       -
-        name: Generate example
-        working-directory: example
-        env:
-          META_TAGS: ${{ steps.meta.outputs.tags }}
+        name: Generate examples
+        if: inputs.PUSH != true
         run: |
-          LATEST_IMAGE=$(echo "$META_TAGS" | tail -n 1)
-          echo "Latest image: $LATEST_IMAGE"
+          IMAGE="local-quicktype:latest"
+          docker build . -t "$IMAGE"
 
           rm -rf outputs/*
           touch outputs/.gitkeep
@@ -163,7 +161,7 @@ jobs:
           echo "Generating TypeScript schemas"
           docker run \
             -v "$(pwd):/example" \
-            "${LATEST_IMAGE}" \
+            "${IMAGE}" \
               --src-lang schema \
               --src "/example/inputs/jsonschema" \
               --lang typescript \
@@ -173,7 +171,7 @@ jobs:
           echo "Generating Go schemas"
           docker run \
             -v "$(pwd):/example" \
-            "${LATEST_IMAGE}" \
+            "${IMAGE}" \
               --src-lang schema \
               --src "/example/inputs/jsonschema" \
               --lang go \
@@ -201,7 +199,7 @@ jobs:
           fi
       -
         name: Commit example changes if detected
-        if: ${{ steps.example-changes.outputs.detected == 'true' }}
+        if: steps.example-changes.outputs.detected == 'true'
         uses: planetscale/ghcommit-action@v0.2.17
         env:
           GITHUB_TOKEN: ${{ steps.bot-token.outputs.token }}
