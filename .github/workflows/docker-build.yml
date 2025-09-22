@@ -156,6 +156,7 @@ jobs:
         working-directory: example
         run: |
           rm -rf outputs/*
+          touch outputs/.gitkeep
           mkdir -p outputs/typescript
           mkdir -p outputs/golang
           
