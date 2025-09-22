@@ -159,7 +159,14 @@ jobs:
         run: |
           docker run \
             -v "$(pwd):/example" \
-            "${{ steps.image-tag.outputs.slug }}"
+            "${{ steps.image-tag.outputs.slug }}" \
+              "/example/inputs/jsonschema" \
+              -o "/example/outputs/swift/Models.swift" \
+              --src-lang schema \
+              --lang swift \
+              --swift-5-support \
+              --access-level public \
+              --no-coding-keys
       -
         name: Check for example changes
         id: example-changes
