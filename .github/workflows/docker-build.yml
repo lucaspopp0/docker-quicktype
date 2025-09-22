@@ -126,8 +126,8 @@ jobs:
           INPUT_PUSH: ${{ inputs.PUSH }}
           IS_TAG: ${{ github.ref_type == 'tag' }}
           IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/quicktype
-          IMAGE_TAG: ""
         run: |
+          IMAGE_TAG=""
           if [[ "$INPUTS_PUSH" == "true" ]]; then
             if [[ "$IS_TAG" == "true" ]]; then
               IMAGE_TAG="$GITHUB_REF_NAME"
@@ -148,7 +148,7 @@ jobs:
         with:
           context: ./docker-quicktype
           push: ${{ inputs.PUSH }}
-          tags: ${{ github.ref_type == 'tag' && steps.meta.outputs.tags || steps.image-tag.outputs.slug }}
+          tags: ${{ steps.image-tag.outputs.slug }}
           labels: ${{ steps.meta.outputs.labels }}
       -
         name: Generate example
