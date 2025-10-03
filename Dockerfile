@@ -1,5 +1,5 @@
 # Use a node 22 docker image
-FROM node:24.8.0-slim
+FROM node:24.7.0-slim
 
 WORKDIR /quicktype
 
