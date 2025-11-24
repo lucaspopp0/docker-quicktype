@@ -25,7 +25,7 @@ jobs:
       ci-changed: ${{ contains(fromJson(steps.changed-paths.outputs.changes || '[]'), 'ci') }}
     steps:
       -
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       -
         name: Check for changes
         uses: dorny/paths-filter@v3
